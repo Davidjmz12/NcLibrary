@@ -1,0 +1,30 @@
+Package: NcLibrary
+Title: .nc manipulator Package
+Date: 2023-08-16
+Version: 1.0
+Authors@R: c(person("David", "Jiménez", "Omeñaca" , "825068@unizar.es", role = c("aut", "cre")))
+URL:  https://github.com/Davidjmz12/NcLibrary
+BugReports:https://github.com/Davidjmz12/NcLibrary/issues
+Description: No descrp.
+Depends: R (>= 2.3)
+Suggests: 
+    rmarkdown,
+    knitr
+Imports:
+  ncdf4,
+  lubridate,
+  data.table,
+  tmaptools,
+  dplyr,
+  reticulate,
+  stringr
+License: GPL-3 + file LICENSE
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 7.2.3
+Roxygen: list(markdown = TRUE)
+VignetteBuilder: knitr
+Config/testthat/edition: 3
+  inst/app_era5.py
+  inst/request_data.py
+  inst/var_names.csv

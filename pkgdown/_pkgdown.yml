@@ -1,0 +1,74 @@
+navbar:
+  structure:
+    left:
+    - home
+    - reference
+    - sourcecode
+    - issue
+    - articles
+    - documents
+    right: github
+    
+  components:
+    home:
+      icon: fas fa-home fa-lg
+      href: index.html
+
+    reference:
+      text: Functions
+      icon: far fa-file-code fa-lg
+      href: reference/index.html
+
+    sourcecode:
+      text: Source Code
+      icon: fab fa-github fa-lg
+      href: https://github.com/Davidjmz12/NcLibrary
+
+    issue:
+      text: Issues
+      icon: fas fa-question-circle fa-lg
+      href: https://github.com/Davidjmz12/NcLibrary/issues
+
+    articles:
+      text: Vignettes
+      icon: fas fa-file-contract fa-lg
+      href: articles/index.html
+      
+    documents:
+      text: References
+      icon: fas fa-book fa-lg
+      menu:
+      - text: Background Page
+        href: Article.html
+
+reference:
+- title: Create request to databases
+  contents:
+  - "create_nc_file_app"
+  - "create_nc_file_data"
+- title: Coordinate functions
+  contents:
+  - "lat_to_str"
+  - "lon_to_str"
+  - "str_to_lon"
+  - "str_to_lat"
+- title: Data Manipulation functions
+  contents:
+  - "get_merge_observed"
+  - "get_subset_city"
+  - "read_eca_zip"
+  - "read_nc_file"
+- title: Set Python environment functions 
+  contents:
+  - "set_reticulate"
+  - "close_reticulate"
+- title: General information functions
+  contents:
+  - "fetch_information"
+- title: Write in file functions
+  contents:
+  - "write_csv"
+
+authors:
+  David Jimñenez Omeñaca:
+    href: https://github.com/Davidjmz12

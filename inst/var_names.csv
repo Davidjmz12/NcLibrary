@@ -1,0 +1,184 @@
+Name,Short Name,Units,id
+Sea ice area fraction,ci,(0 - 1),31
+Geopotential,z,m2 s-2,129
+Temperature,t,K,130
+U component of wind,u,m s-1,131
+V component of wind,v,m s-1,132
+Specific humidity,q,kg kg-1,133
+Surface pressure,sp,Pa,134
+Vertical velocity,w,Pa s-1,135
+Total column vertically-integrated water vapour,tcwv,kg m-2,137
+Vorticity (relative),vo,s-1,138
+Soil temperature level 1,stl1,K,139
+Soil wetness level 1,swl1,m of water equivalent,140
+Snow depth,sd,m of water equivalent,141
+Large-scale precipitation,lsp,m,142
+Convective precipitation,cp,m,143
+Snowfall,sf,m of water equivalent,144
+Boundary layer dissipation,bld,J m-2,145
+Surface sensible heat flux,sshf,J m-2,146
+Surface latent heat flux,slhf,J m-2,147
+Mean sea level pressure,msl,Pa,151
+Divergence,d,s-1,155
+Geopotential height,gh,gpm,156
+Relative humidity,r,%,157
+Tendency of surface pressure,tsp,Pa s-1,158
+Total cloud cover,tcc,(0 - 1),164
+Surface short-wave (solar) radiation downwards,ssrd,J m-2,169
+Land-sea mask,lsm,(0 - 1),172
+Surface roughness (climatological),sr,m,173
+Albedo (climatological),al,(0 - 1),174
+Surface net short-wave (solar) radiation,ssr,J m-2,176
+Surface net long-wave (thermal) radiation,str,J m-2,177
+Top net short-wave (solar) radiation,tsr,J m-2,178
+Top net long-wave (thermal) radiation,ttr,J m-2,179
+Eastward turbulent surface stress,ewss,N m-2 s,180
+Northward turbulent surface stress,nsss,N m-2 s,181
+Evaporation,e,m of water equivalent,182
+Convective cloud cover,ccc,(0 - 1),185
+Ozone mass mixing ratio,o3,kg kg-1,203
+Total column ozone,tco3,kg m-2,206
+"Surface net short-wave (solar) radiation, clear sky",ssrc,J m-2,210
+"Surface net long-wave (thermal) radiation, clear sky",strc,J m-2,211
+Temperature of snow layer,tsn,K,238
+Convective precipitation (water),acpcp,kg m-2,3063
+Snow depth,sde,m,3066
+Convective cloud cover,ccc,%,3072
+Latent heat flux,lhf,W m-2,3121
+Sensible heat flux,shf,W m-2,3122
+Boundary layer dissipation,bld,W m-2,3123
+Sea water potential temperature,thetao,deg C,151129
+Sea water practical salinity,so,psu,151130
+Eastward sea water velocity,ocu,m s-1,151131
+Northward sea water velocity,ocv,m s-1,151132
+Upward sea water velocity,wo,m s-1,151133
+Sea water sigma theta,sigmat,kg m-3,151138
+Sea surface height,zos,m,151145
+Ocean barotropic stream function,stfbarot,m3 s-1,151147
+Surface downward eastward stress,taueo,N m-2,151153
+Surface downward northward stress,tauno,N m-2,151154
+Depth of 20C isotherm,t20d,m,151163
+Sea surface temperature in degC,tos,deg C,151189
+Depth of 14C isotherm,t14d,deg C,151195
+Depth of 17C isotherm,t17d,deg C,151196
+Depth of 26C isotherm,t26d,deg C,151197
+Depth of 28C isotherm,t28d,deg C,151198
+Surface downward heat flux in sea water,hfds,W m-2,151213
+Ocean heat content 0-300m,hc300m,J m-2,151214
+Ocean heat content 0-700m,hc700m,J m-2,151215
+Ocean heat content 0-bottom,hcbtm,J m-2,151216
+Water flux correction,wfcorr,kg m-2 s-1,151217
+Sea surface practical salinity,sos,psu,151219
+Surface downward y stress,tauvo,N m-2,151222
+Surface downward x stress,tauuo,N m-2,151223
+Ocean mixed layer thickness defined by vertical tracer diffusivity threshold,mlotdev,m,151224
+Ocean mixed layer thickness defined by sigma theta 0.01 kg/m3,mlotst010,m,151225
+Ocean mixed layer thickness defined by sigma theta 0.03 kg/m3,mlotst030,m,151226
+Ocean mixed layer thickness defined by sigma theta 0.125 kg/m3,mlotst125,m,151227
+Ocean mixed layer thickness defined by temperature 0.2C,mlott02,m,151228
+Ocean mixed layer thickness defined by temperature 0.5C,mlott05,m,151229
+Virtual salt flux into sea water,vsf,kg m-2 s-1,151230
+Integrated salinity 0-700m,sc700m,psu*m,151232
+Integrated salinity 0-bottom,sabtm,psu*m,151233
+Sea water mass per unit area expressed as thickness,swmth,m,151234
+Integrated salinity 0-300m,sc300m,psu*m,151235
+Surface net downward shortwave flux into ocean,rss,W m-2,151236
+Sea water y velocity,voy,m s-1,151250
+Sea water x velocity,uox,m s-1,151251
+Sea ice albedo,sialb,(0 - 1),174092
+Sea ice surface temperature,sitemptop,deg C,174093
+Sea ice snow thickness,sisnthick,m,174097
+Sea-ice thickness,sithick,m,174098
+Sea ice velocity along x,siue,m s-1,174112
+Sea ice velocity along y,sivn,m s-1,174113
+Carbon Dioxide,co2,kg kg-1,210061
+Methane,ch4,kg kg-1,210062
+Nitrous oxide,n2o,kg kg-1,210063
+Total column Nitrous oxide,tcn2o,kg m-2,210066
+Particulate matter d &lt;= 1 um,pm1,kg m-3,210072
+Particulate matter d &lt;= 2.5 um,pm2p5,kg m-3,210073
+Particulate matter d &lt;= 10 um,pm10,kg m-3,210074
+Nitrogen dioxide mass mixing ratio,no2,kg kg-1,210121
+Sulphur dioxide mass mixing ratio,so2,kg kg-1,210122
+Carbon monoxide mass mixing ratio,co,kg kg-1,210123
+Formaldehyde,hcho,kg kg-1,210124
+Total column Nitrogen dioxide,tcno2,kg m-2,210125
+Total column Sulphur dioxide,tcso2,kg m-2,210126
+Total column Carbon monoxide,tcco,kg m-2,210127
+Total column Formaldehyde,tchcho,kg m-2,210128
+Radon,ra,kg kg-1,210181
+Total column Radon,tcra,kg m-2,210183
+Ozone mass mixing ratio (full chemistry scheme),go3,kg kg-1,210203
+GEMS Total column ozone,gtco3,kg m-2,210206
+Hydrogen peroxide,h2o2,kg kg-1,217003
+Methane (chemistry),ch4_c,kg kg-1,217004
+Nitric acid,hno3,kg kg-1,217006
+Ethene,c2h4,kg kg-1,217010
+Peroxyacetyl nitrate,pan,kg kg-1,217013
+Isoprene,c5h8,kg kg-1,217016
+Dimethyl sulfide,dms,kg kg-1,217018
+Ammonia mass mixing ratio,nh3,kg kg-1,217019
+Nitrogen monoxide mass mixing ratio,no,kg kg-1,217027
+Hydroxyl radical,oh,kg kg-1,217030
+Nitrate radical,no3,kg kg-1,217032
+Dinitrogen pentoxide,n2o5,kg kg-1,217033
+Methanol,ch3oh,kg kg-1,217042
+Formic acid,hcooh,kg kg-1,217043
+Ethane,c2h6,kg kg-1,217045
+Ethanol,c2h5oh,kg kg-1,217046
+Propane,c3h8,kg kg-1,217047
+Propene,c3h6,kg kg-1,217048
+Terpenes,c10h16,kg kg-1,217049
+Chlorine dioxide,oclo,kg kg-1,217063
+Chlorine nitrate,clono2,kg kg-1,217064
+Hypochlorous acid,hocl,kg kg-1,217065
+Hydrogen bromide,hbr,kg kg-1,217068
+Hypobromous acid,hobr,kg kg-1,217070
+Methyl chloride,ch3cl,kg kg-1,217078
+Methyl bromide,ch3br,kg kg-1,217080
+Sulfuric acid,h2so4,kg kg-1,217085
+Nitrous acid,hono,kg kg-1,217086
+Acetic acid,ch3cooh,kg kg-1,217096
+Chlorine monoxide,clo,kg kg-1,217174
+Bromine monoxide,bro,kg kg-1,217176
+Bromine nitrate,brono2,kg kg-1,217194
+Hydrogen chloride,hcl,kg kg-1,217200
+Total column hydrogen peroxide,tc_h2o2,kg m-2,218003
+Total column methane,tc_ch4,kg m-2,218004
+Total column nitric acid,tc_hno3,kg m-2,218006
+Total column ethene,tc_c2h4,kg m-2,218010
+Total column  peroxyacetyl nitrate,tc_pan,kg m-2,218013
+Total column  isoprene,tc_c5h8,kg m-2,218016
+Total column dimethyl sulfide,tc_dms,kg m-2,218018
+Total column ammonia,tc_nh3,kg m-2,218019
+Total column  sulfate,tc_so4,kg m-2,218020
+Total column nitrogen monoxide,tc_no,kg m-2,218027
+Total column hydroxyl radical,tc_oh,kg m-2,218030
+Total column nitrate radical,tc_no3,kg m-2,218032
+Total column dinitrogen pentoxide,tc_n2o5,kg m-2,218033
+Total column methanol,tc_ch3oh,kg m-2,218042
+Total column formic acid,tc_hcooh,kg m-2,218043
+Total column  ethane,tc_c2h6,kg m-2,218045
+Total column ethanol,tc_c2h5oh,kg m-2,218046
+Total column propane,tc_c3h8,kg m-2,218047
+Total column propene,tc_c3h6,kg m-2,218048
+Total column terpenes,tc_c10h16,kg m-2,218049
+Total column of chlorine dioxide,tc_oclo,kg m-2,218063
+Total column of chlorine nitrate,tc_clono2,kg m-2,218064
+Total column of hypochlorous acid,tc_hocl,kg m-2,218065
+Total column of hydrogen bromide,tc_hbr,kg m-2,218068
+Total column of hypobromous acid,tc_hobr,kg m-2,218070
+Total column of methyl chloride,tc_ch3cl,kg m-2,218078
+Total column of methyl bromide,tc_ch3br,kg m-2,218080
+Total column of nitrous acid,tc_hono,kg m-2,218086
+Total column of acetic acid,tc_ch3cooh,kg m-2,218096
+Total column of chlorine monoxide,tc_clo,kg m-2,218174
+Total column of bromine monoxide,tc_bro,kg m-2,218176
+Total column of bromine nitrate,tc_brono2,kg m-2,218194
+Total column of hydrogen chloride,tc_hcl,kg m-2,218200
+Forecast albedo,al,%,260509
+Sea surface practical salinity,sos,g kg-1,262100
+Depth of 20 C isotherm,t20d,m,262104
+Ocean mixed layer depth defined by sigma theta 0.01 kg m-3,mlotst010,m,262113
+Sea surface height,zos,m,262124
+Heat flux correction,hfcorr,W m-2,262133
