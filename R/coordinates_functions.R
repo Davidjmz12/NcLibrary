@@ -1,5 +1,4 @@
 
-
 #' Transform (0,360) longitude to (-180,180)
 #'
 #' @param longitudes array of latitudes

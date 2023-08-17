@@ -5,8 +5,10 @@ from tkinter import ttk
 import pandas as pd
 from request_data import make_request
 from tkinter import messagebox
+from tkinter import PhotoImage
+import os
 
-def app(df):
+def app(df,csv_path):
   
   variables = []
   
@@ -108,6 +110,10 @@ def app(df):
   # Create a tkinter window
   main = tk.Tk()
   main.title("User interface")
+  
+  # Add icon
+  photo = PhotoImage(file = csv_path)
+  main.iconphoto(True, photo)
   
   # Create label of variables
   var_label = ttk.Label(main, text="Variables")

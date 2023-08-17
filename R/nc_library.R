@@ -1,12 +1,5 @@
-library(ncdf4)
-library(lubridate)
-library(data.table)
-library(tmaptools)
-library(dplyr)
-library(reticulate)
 
 utils::globalVariables(c("DATE", "aux", "x"))
-
 
 #' Get times information
 #'
@@ -585,12 +578,13 @@ create_nc_file_app <- function()
 	if("ncLib-reticulate" %in% list)
 	{
     use_condaenv("ncLib-reticulate")
-    file <- system.file("var_names.xlsx",package="NcLibrary")
-    df <- read.csv(file)
+    file <- system.file("var_names.csv",package="NcLibrary")
+    df <- read.csv(file, sep=",")
+    csv_path <- system.file("logo.png",package="NcLibrary")
   
     source_python(system.file("app_era5.py",package="NcLibrary"))
     app <- import_from_path("app_era5", file.path(system.file(package = "NcLibrary")))$app
-    app(df)
+    app(df,csv_path)
 	}
 	else{
 	  stop("It is needed to execute set_reticulate() before using this function.")
