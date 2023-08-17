@@ -3,6 +3,6 @@ pkgdown: 2.0.7
 pkgdown_sha: ~
 articles:
   coordinate_functions: coordinate_functions.html
-  Read_Nc_File: Read_Nc_File.html
-last_built: 2023-08-17T17:39Z
+  read_Nc_File: read_Nc_File.html
+last_built: 2023-08-18T08:50Z
 

@@ -28,3 +28,4 @@ Config/testthat/edition: 3
   inst/app_era5.py
   inst/request_data.py
   inst/var_names.csv
+  inst/logo.png

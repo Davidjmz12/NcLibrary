@@ -1,5 +1,3 @@
-library(lubridate)
-library(stringr)
 
 #' Delete all the unused files of a ECA zip.
 #'
