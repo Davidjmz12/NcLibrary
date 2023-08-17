@@ -38,8 +38,8 @@ navbar:
       text: References
       icon: fas fa-book fa-lg
       menu:
-      - text: Background Page
-        href: Article.html
+      - text: Library report
+        href: Article.pdf
 
 reference:
 - title: Create request to databases

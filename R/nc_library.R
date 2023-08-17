@@ -18,22 +18,23 @@ utils::globalVariables(c("DATE", "aux", "x"))
 #' @noRd
 .get_times<-function(hourly_column=FALSE, extended_hours=TRUE, private_var)
 {
-    date <- as.character(as.POSIXct(private_var$nc_data$dim$time$vals*3600, origin = "1900-01-01 00:00:00.0", tz="GMT", format = "%Y-%m-%d %H:%M:%S"))
-    if(hourly_column) date <- date[seq(1,length(date),by=.get_num_hours(private_var))]
+  date <- as.POSIXct(private_var$nc_data$dim$time$vals*3600, origin = "1900-01-01 00:00:00.0", tz="GMT", format = "%Y-%m-%d %H:%M:%S")
+  date <- format(date, format = "%Y-%m-%d %H:%M:%S")
+  if(hourly_column) date <- date[seq(1,length(date),by=.get_num_hours(private_var))]
 
-    days <- day(date)
+  days <- day(date)
 	months <- month(date)
-  	years <- year(date)
+  years <- year(date)
 	if(hourly_column)
-    {
-        date <- strftime(date, format = "%Y-%m-%d")
+  {
+    date <- strftime(date, format = "%Y-%m-%d")
 		return(data.frame(DATE=date, DAY=days, MONTH=months, YEAR=years))
-    }
+  }
 	else{
 		hours <- hour(date)
 		if(!extended_hours)
 		{
-			date <- strftime(date, format = "%Y-%m-%d %H")
+		  date <- strftime(date, format = "%Y-%m-%d %H")
 			return(data.frame(DATE=date, HOUR=hours, DAY=days, MONTH=months, YEAR=years))
 		}
 		else{
@@ -271,23 +272,24 @@ utils::globalVariables(c("DATE", "aux", "x"))
 					 nc_data = nc_open(nc_file),
 					 red_x = 1L,
 					 red_y=  1L
-				)
-    long_l <- private_var$nc_data$dim$longitude$len-1
-    lat_l <- private_var$nc_data$dim$latitude$len-1
-    if(is.integer(reduction_factor) & all(reduction_factor)>=1)
-    {
-		if(long_l%%reduction_factor[1] != 0 || lat_l%%reduction_factor[2] != 0)
-		{
-			warning("Reduction factor does not cover all the grid.\n")
-		}
-		private_var$red_x <- reduction_factor[1]
-		private_var$red_y <- reduction_factor[2]
-		return(private_var)
-    }
-    else{
-        stop("The reduction_factor must be a positive integer.")
-        stop("Use L (e.g, 5L) to explicitly create an integer object.")
-    }
+				   )
+	private_var$nc_data$dim$longitude$vals <- .transform_longitude(private_var$nc_data$dim$longitude$vals)
+  long_l <- private_var$nc_data$dim$longitude$len-1
+  lat_l <- private_var$nc_data$dim$latitude$len-1
+  if(is.integer(reduction_factor) & all(reduction_factor)>=1)
+  {
+  	if(long_l%%reduction_factor[1] != 0 || lat_l%%reduction_factor[2] != 0)
+  	{
+  		warning("Reduction factor does not cover all the grid.\n")
+  	}
+  	private_var$red_x <- reduction_factor[1]
+  	private_var$red_y <- reduction_factor[2]
+  	return(private_var)
+  }
+  else{
+    stop("The reduction_factor must be a positive integer.")
+    stop("Use L (e.g, 5L) to explicitly create an integer object.")
+  }
 }
 
 #' Return the variable names.
@@ -358,61 +360,60 @@ read_nc_file <- function(nc_file, reduction.x=1L,reduction.y=1L,sep="_", hourly.
 						 extended.hours=FALSE,display.times=FALSE)
 {
 
-    if(display.times)
-    {
-        start <- Sys.time()
-        print("-- Starting function get_df ")
-    }
-
+  if(display.times)
+  {
+      start <- Sys.time()
+      print("-- Starting function get_df ")
+  }
 	private_var <- .set_private_var(nc_file, c(reduction.x, reduction.y))
 
-    var_geo <-expand.grid(geo.levels,var.names)
+  var_geo <-expand.grid(geo.levels,var.names)
 
-    fun_col <- function(x,sep,hourly.col, private_var, extended.hours)
-    {
-        x <- unname(x)
-        geo_level <-gsub(" ", "", x[1])
-        var <- x[2]
-        col_names <- .col_names(var, sep, geo_level, hourly.col, private_var, extended.hours)
-        return(col_names)
-    }
-    column_names <- apply(var_geo, MARGIN=1, FUN=fun_col, sep=sep, hourly.col=hourly.col,
-						  private_var=private_var, extended.hours=extended.hours)
+  fun_col <- function(x,sep,hourly.col, private_var, extended.hours)
+  {
+    x <- unname(x)
+    geo_level <-gsub(" ", "", x[1])
+    var <- x[2]
+    col_names <- .col_names(var, sep, geo_level, hourly.col, private_var, extended.hours)
+    return(col_names)
+  }
+  column_names <- apply(var_geo, MARGIN=1, FUN=fun_col, sep=sep, hourly.col=hourly.col,
+					  private_var=private_var, extended.hours=extended.hours)
 
-    fun_val <- function(x,hourly.col)
-    {
-        geo_level <- as.integer(x$Var1)
-        var <- as.character(x$Var2)
-        mat_values <- .data_values(var, geo_level, hourly.col, private_var)
-        return(mat_values)
-    }
-    row_names <- .get_times(hourly.col, extended.hours, private_var)
-    mat <- matrix(NA, nrow=dim(row_names)[1],0)
-    for(i in seq_len(nrow(var_geo)))
-    {
-        mat_aux <- fun_val(var_geo[i,],hourly.col)
-        mat <- cbind(mat,mat_aux)
-    }
+  fun_val <- function(x,hourly.col)
+  {
+      geo_level <- as.integer(x$Var1)
+      var <- as.character(x$Var2)
+      mat_values <- .data_values(var, geo_level, hourly.col, private_var)
+      return(mat_values)
+  }
+  row_names <- .get_times(hourly.col, extended.hours, private_var)
+  mat <- matrix(NA, nrow=dim(row_names)[1],0)
+  for(i in seq_len(nrow(var_geo)))
+  {
+      mat_aux <- fun_val(var_geo[i,],hourly.col)
+      mat <- cbind(mat,mat_aux)
+  }
 
-    df <- as.data.frame(mat)
-    colnames(df) <- column_names
-    df <- cbind(row_names,df)
+  df <- as.data.frame(mat)
+  colnames(df) <- column_names
+  df <- cbind(row_names,df)
 
-    if(display.times)
-    {
-        end <- Sys.time()-start
-        print(sprintf("** Time elapsed function get_df : %f s",end))
-        print(sprintf("   With dataframe dimension: %d x %d",dim(df)[1],dim(df)[2]))
-    }
+  if(display.times)
+  {
+      end <- Sys.time()-start
+      print(sprintf("** Time elapsed function get_df : %f s",end))
+      print(sprintf("   With dataframe dimension: %d x %d",dim(df)[1],dim(df)[2]))
+  }
 
-    aux <- .get_coordinates(private_var)
-    l <- list(temporal_info=list(daily=hourly.col, first=min(row_names$DATE),last=max(row_names$DATE),vals=row_names$DATE),
-              df=df,vars=var.names,geo_levels=geo.levels,creation_time=as.character(Sys.time()),
-              extended_hours=extended.hours,hours=.get_hours(TRUE, private_var,extended.hours),grid=aux$grid,
-              latitude = list(range=list(min=str_to_lat(aux$lat_mm$min),max=str_to_lat(aux$lat_mm$max)),vals=str_to_lat(aux$latitude)),
-              longitude= list(range=list(min=str_to_lon(aux$long_mm$min),max=str_to_lon(aux$long_mm$max)),vals=str_to_lon(aux$longitude)),
-              file=nc_file,sep=sep,obs_values= NULL)
-    nc_close(private_var$nc_data)
+  aux <- .get_coordinates(private_var)
+  l <- list(temporal_info=list(daily=hourly.col, first=min(row_names$DATE),last=max(row_names$DATE),vals=row_names$DATE),
+            df=df,vars=var.names,geo_levels=geo.levels,creation_time=as.character(Sys.time()),
+            extended_hours=extended.hours,hours=.get_hours(TRUE, private_var,extended.hours),grid=aux$grid,
+            latitude = list(range=list(min=str_to_lat(aux$lat_mm$min),max=str_to_lat(aux$lat_mm$max)),vals=str_to_lat(aux$latitude)),
+            longitude= list(range=list(min=str_to_lon(aux$long_mm$min),max=str_to_lon(aux$long_mm$max)),vals=str_to_lon(aux$longitude)),
+            file=nc_file,sep=sep,obs_values= NULL)
+  nc_close(private_var$nc_data)
 	return(l)
 }
 
@@ -529,7 +530,7 @@ get_subset_city <- function(data_era, city_name, depth=1)
 	names <- apply(grid,MARGIN=1,FUN=function(x) paste0(data_era$sep,paste(x,collapse=data_era$sep),data_era$sep))
 	names <- c(names,paste0("OBS",data_era$sep),"YEAR","MONTH","DAY","DATE","HOUR","MINUTE","SECOND","HOUR_EXT")
 	reg <- paste(names, collapse="|")
-  	bools <- sapply(colnames(data_era$df), function(item1) any(grepl(reg, item1)))
+  bools <- sapply(colnames(data_era$df), function(item1) any(grepl(reg, item1)))
 	data_era$df <- data_era$df[,bools]
 	data_era$latitude$vals <- lon_lat$y
 	data_era$longitude$vals <- lon_lat$x

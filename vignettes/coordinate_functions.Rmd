@@ -1,0 +1,49 @@
+---
+title: "coordinate_functions"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{coordinate_functions}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+Here we will be covering the functions to transform between coordinate representations. We will start with the representation `a <- c(-10,0,10)` of a longitude or latitude.
+
+```{r}
+library(NcLibrary)
+
+a <- c(-10,0,10)
+lat_to_str(a)
+lon_to_str(a)
+```
+
+Note that as default the 0 is given one of the coordinates. But 0W is equivalent to 0E and equally with the latitude. Now we will see how to do the reverse change.
+
+```{r}
+
+lon <- c("10W","0W","0E","10E")
+lat <- c("10S","0S","0N","10N")
+
+str_to_lon(lon)
+str_to_lat(lat)
+```
+
+Finally the functions return error if it is not a good string representation.
+
+```{r}
+
+lon <- c("10N") # Wrong longitude
+lat <- c("10N") # Wrong latitude
+
+tryCatch({str_to_lon(lon)},error=function(e) print(e))
+
+tryCatch({str_to_lat(lat)},error=function(e) print(e))
+```
+

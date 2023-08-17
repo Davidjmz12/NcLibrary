@@ -1,4 +1,23 @@
 
+
+#' Transform (0,360) longitude to (-180,180)
+#'
+#' @param longitudes array of latitudes
+#'
+#' @return array with the transformed longitudes
+#' @noRd
+#'
+#' @examples
+#' .transform_longitude(c(360,0))
+.transform_longitude <- function(latitudes)
+{
+  fun <- function(lat)
+  {
+    return ((lat+180)%%360-180)
+  }
+  return(sapply(latitudes,fun))
+}
+
 #' @title Coordinate point is outside,
 #' @description
 #' Check if a coordinate limit is outside a 2D interval.

@@ -4,7 +4,16 @@
     <loc>/404.html</loc>
   </url>
   <url>
+    <loc>/articles/coordinate_functions.html</loc>
+  </url>
+  <url>
+    <loc>/articles/create_and_read.html</loc>
+  </url>
+  <url>
     <loc>/articles/index.html</loc>
+  </url>
+  <url>
+    <loc>/articles/Read_Nc_File.html</loc>
   </url>
   <url>
     <loc>/articles/samplevignette.html</loc>
