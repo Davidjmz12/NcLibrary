@@ -1,13 +1,13 @@
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# NcLibrary - Meteorological Data Management R-Library <img src="man/figures/logo.png" align="right" style="padding: 10px"/>
+# NcLibrary - Meteorological Data Management R-Library <img src="man/figures/logo.png" align="right" style="padding: 10px"  width="300"/>
 
 ## Overview
 
 NcLibrary is an R-library developed to simplify the retrieval and
 manipulation of meteorological data from various databases, including
 the ERA5 general database and observed values from ECAD. This library
-aims to enhance compatibility, accessibility, and usability of
+aims to enhance the compatibility, accessibility, and usability of
 meteorological data within statistical research and analysis.
 
 ## Features
@@ -46,7 +46,7 @@ library(NcLibrary)
 # Create a NetCDF file using the user interface
 create_nc_file_app()
 
-# Read the NetCDF file and convert to a data frame
+# Read the NetCDF file and convert it to a data frame
 data <- read_nc_file("path/to/your/file.nc")
 
 # Subset data for a specific city
@@ -56,14 +56,26 @@ subset_data <- get_subset_city(data, city_name = "Your City Name")
 ## Documentation
 
 For more detailed information on each function and its parameters,
-please refer to the library documentation.
+Please take a look at the [library documentation](docs/index.html).
+
+## Methodology
+
+The development of NcLibrary followed a well-defined methodology,
+including phases such as problem identification, research and data
+collection, development of core functions, user interface design,
+testing and validation, library integration and documentation,
+performance evaluation, and package deployment. For a detailed breakdown
+of the methodology, please refer to the [internship
+report](docs/Article.pdf).
 
 ## Issues and Contributions
 
-If you encounter any issues or have suggestions for improvements, please
-feel free to open an issue. Contributions are also welcome through pull
-requests.
+If you happen to have any issues or suggestions for improvements, please
+feel free to [open an
+issue](https://github.com/Davidjmz12/NcLibrary/issues). Contributions
+are also welcome through [pull
+requests](https://github.com/Davidjmz12/NcLibrary/pulls).
 
 ## License
 
-This project is licensed under the GNU3 license.
+This project is licensed under the [GNU3 license](LICENSE).

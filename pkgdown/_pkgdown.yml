@@ -1,3 +1,5 @@
+url: https://davidjmz12.github.io/NcLibrary/
+
 navbar:
   structure:
     left:
@@ -35,11 +37,9 @@ navbar:
       href: articles/index.html
       
     documents:
-      text: References
+      text: Library Article
       icon: fas fa-book fa-lg
-      menu:
-      - text: Library report
-        href: Article.pdf
+      href: Article.pdf
 
 reference:
 - title: Create request to databases
