@@ -11,11 +11,7 @@ output:
 
 ## Overview
 
-NcLibrary is an R-library developed to simplify the retrieval and
-manipulation of meteorological data from various databases, including
-the ERA5 general database and observed values from ECAD. This library
-aims to enhance the compatibility, accessibility, and usability of
-meteorological data within statistical research and analysis.
+NcLibrary is an R-library developed to simplify the retrieval and manipulation of meteorological data from various databases, including the ERA5 general database and observed values from ECAD. This library aims to enhance the compatibility, accessibility, and usability of meteorological data within statistical research and analysis.
 
 ## Features
 
@@ -63,7 +59,7 @@ subset_data <- get_subset_city(data, city_name = "Your City Name")
 ## Documentation
 
 For more detailed information on each function and its parameters,
-Please take a look at the [library documentation](docs/index.html).
+Please take a look at the [library documentation](https://davidjmz12.github.io/NcLibrary/).
 
 ## Methodology
 

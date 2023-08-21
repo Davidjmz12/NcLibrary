@@ -1,6 +1,5 @@
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-
 # NcLibrary - Meteorological Data Management R-Library <img src="man/figures/logo.png" align="right" style="padding: 10px"  width="300"/>
 
 ## Overview
@@ -57,16 +56,26 @@ subset_data <- get_subset_city(data, city_name = "Your City Name")
 ## Documentation
 
 For more detailed information on each function and its parameters,
-Please take a look at the [library documentation](https://davidjmz12.github.io/NcLibrary/).
+Please take a look at the [library
+documentation](https://davidjmz12.github.io/NcLibrary/).
 
 ## Methodology
 
-The development of NcLibrary followed a well-defined methodology, including phases such as problem identification, research and data collection, development of core functions, user interface design, testing and validation, library integration and documentation, performance evaluation, and package deployment. For a detailed breakdown of the methodology, please refer to the [internship report](docs/Article.pdf).
+The development of NcLibrary followed a well-defined methodology,
+including phases such as problem identification, research and data
+collection, development of core functions, user interface design,
+testing and validation, library integration and documentation,
+performance evaluation, and package deployment. For a detailed breakdown
+of the methodology, please refer to the [internship
+report](docs/Article.pdf).
 
 ## Issues and Contributions
 
 If you happen to have any issues or suggestions for improvements, please
-feel free to [open an issue](https://github.com/Davidjmz12/NcLibrary/issues). Contributions are also welcome through [pull requests](https://github.com/Davidjmz12/NcLibrary/pulls).
+feel free to [open an
+issue](https://github.com/Davidjmz12/NcLibrary/issues). Contributions
+are also welcome through [pull
+requests](https://github.com/Davidjmz12/NcLibrary/pulls).
 
 ## License
 
