@@ -46,6 +46,9 @@ library(NcLibrary)
 # Create a NetCDF file using the user interface
 create_nc_file_app()
 
+# Set python evironment.
+set_reticulate()
+
 # Read the NetCDF file and convert it to a data frame
 data <- read_nc_file("path/to/your/file.nc")
 
@@ -67,7 +70,7 @@ collection, development of core functions, user interface design,
 testing and validation, library integration and documentation,
 performance evaluation, and package deployment. For a detailed breakdown
 of the methodology, please refer to the [internship
-report](docs/Article.pdf).
+report](https://davidjmz12.github.io/NcLibrary/Article.pdf).
 
 ## Issues and Contributions
 
