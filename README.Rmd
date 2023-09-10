@@ -49,7 +49,7 @@ library(NcLibrary)
 # Create a NetCDF file using the user interface
 create_nc_file_app()
 
-# Set python evironment.
+# Set python environment.
 set_reticulate()
 
 # Read the NetCDF file and convert it to a data frame
