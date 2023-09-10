@@ -14,7 +14,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-Here we will be covering the functions to transform between coordinate representations. We will start with the representation `a <- c(-10,0,10)` of a longitude or latitude.
+Here we will be covering the functions to transform between coordinate representations. We will start with the representation `a <- c(-10,0,10)` of longitude or latitude.
 
 ```{r}
 library(NcLibrary)
@@ -35,7 +35,7 @@ str_to_lon(lon)
 str_to_lat(lat)
 ```
 
-The functions return error if it is not a good string representation.
+The functions return an error if it is not a good string representation.
 
 ```{r}
 
@@ -47,7 +47,7 @@ tryCatch({str_to_lon(lon)},error=function(e) print(e))
 tryCatch({str_to_lat(lat)},error=function(e) print(e))
 ```
 
-Finally there is a function to check if a coordinate is inside a grid given by the two arrays of latitude and longitude:
+Finally, there is a function to check if a coordinate is inside a grid given by the two arrays of latitude and longitude:
 
 ```{r}
 
