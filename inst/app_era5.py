@@ -254,22 +254,6 @@ def app(df_var, df_lvl):
     check_label = ttk.Label(main, text="")
     check_label.grid(row=7, column=8, padx=5, pady=5)
 
-    def debug():
-        search_var.set("Temperature")
-        hour_var.set("00:00:00")
-        grid_var.set("1.0x1.0")
-        file_var.set("a.nc")
-        first_var.set("2000/01/01")
-        last_var.set("2000/01/01")
-        for dir in direction_vars:
-            dir.set("1")
-
-    debug()
     string_vars = [search_var, lvl_var, hour_var, grid_var, file_var, first_var, last_var] + direction_vars
 
     main.mainloop()
-
-a = pd.read_csv("var_names.csv")
-b = pd.read_csv("geo_names.csv")
-
-app(a,b)
