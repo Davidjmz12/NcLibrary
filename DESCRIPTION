@@ -1,7 +1,7 @@
 Package: NcLibrary
-Title: .nc manipulator Package
+Title: NetCDF4 Package
 Date: 2023-08-16
-Version: 1.0
+Version: 2.0
 Authors@R: c(person("David", "Jiménez", "Omeñaca" , "825068@unizar.es", role = c("aut", "cre")))
 URL:  https://github.com/Davidjmz12/NcLibrary
 BugReports:https://github.com/Davidjmz12/NcLibrary/issues
@@ -24,8 +24,7 @@ LazyData: true
 RoxygenNote: 7.2.3
 Roxygen: list(markdown = TRUE)
 VignetteBuilder: knitr
-Config/testthat/edition: 3
   inst/app_era5.py
   inst/request_data.py
   inst/var_names.csv
-  inst/logo.png
+  inst/geo_names.csv

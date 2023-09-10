@@ -18,7 +18,7 @@ file with the data requested"><meta property="og:image" content="https://davidjm
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">NcLibrary</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.0</span>
       </span>
     </div>
 
@@ -98,14 +98,15 @@ file with the data requested</p>
 <span>  <span class="va">start_date</span>,</span>
 <span>  <span class="va">end_date</span>,</span>
 <span>  <span class="va">coordinates</span>,</span>
-<span>  <span class="va">variables</span></span>
+<span>  <span class="va">variables</span>,</span>
+<span>  <span class="va">units_num</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>levels</dt>
-<dd><p>geo potential levels requested joined by comma ",". The range is from 1 to 127 both included</p></dd>
+<dd><p>levels id requested joined by comma ",". The range is from 1 to 127 both included</p></dd>
 
 
 <dt>hours</dt>
@@ -135,10 +136,15 @@ file with the data requested</p>
 <dt>variables</dt>
 <dd><p>integer representation of the variables to request joined by comma ",".</p></dd>
 
+
+<dt>units_num</dt>
+<dd><p>number column of the unit of the level. 3 for half-level level, 5 for Geopotential altitude and 7 for Temperature</p></dd>
+
 </dl></div>
     <div id="see-also">
     <h2>See also</h2>
-    <div class="dont-index"><p><a href="https://apps.ecmwf.int/codes/grib/param-db/" class="external-link">https://apps.ecmwf.int/codes/grib/param-db/</a></p></div>
+    <div class="dont-index"><p><a href="https://apps.ecmwf.int/codes/grib/param-db/" class="external-link">https://apps.ecmwf.int/codes/grib/param-db/</a></p>
+<p><a href="https://confluence.ecmwf.int/display/UDOC/L137+model+level+definitions" class="external-link">https://confluence.ecmwf.int/display/UDOC/L137+model+level+definitions</a></p></div>
     </div>
 
   </div>

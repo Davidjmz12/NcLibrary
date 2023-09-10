@@ -1,8 +1,8 @@
 ---
-title: "read_Nc_File"
+title: "Read NetCDF4 File"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Read_Nc_File}
+  %\VignetteIndexEntry{Read NetCDF4 File}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---

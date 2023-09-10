@@ -52,10 +52,12 @@ reference:
   - "lon_to_str"
   - "str_to_lon"
   - "str_to_lat"
+  - "coord_is_inside"
 - title: Data Manipulation functions
   contents:
   - "get_merge_observed"
   - "get_subset_city"
+  - "get_subset_coordinates"
   - "read_eca_zip"
   - "read_nc_file"
 - title: Set Python environment functions 

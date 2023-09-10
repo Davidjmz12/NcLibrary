@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>.nc manipulator Package • NcLibrary</title>
+<title>NetCDF4 Package • NcLibrary</title>
 <!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
 <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
 <link rel="apple-touch-icon" type="image/png" sizes="180x180" href="apple-touch-icon.png">
@@ -18,7 +18,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="pkgdown.css" rel="stylesheet">
 <script src="pkgdown.js"></script><link href="extra.css" rel="stylesheet">
-<meta property="og:title" content=".nc manipulator Package">
+<meta property="og:title" content="NetCDF4 Package">
 <meta property="og:description" content="No descrp.">
 <meta property="og:image" content="https://davidjmz12.github.io/NcLibrary/logo.png">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
@@ -41,7 +41,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">NcLibrary</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.0</span>
       </span>
     </div>
 
@@ -151,6 +151,9 @@
 <span><span class="co"># Create a NetCDF file using the user interface</span></span>
 <span><span class="fu"><a href="reference/create_nc_file_app.html">create_nc_file_app</a></span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
+<span><span class="co"># Set python evironment.</span></span>
+<span><span class="fu"><a href="reference/set_reticulate.html">set_reticulate</a></span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
 <span><span class="co"># Read the NetCDF file and convert it to a data frame</span></span>
 <span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/read_nc_file.html">read_nc_file</a></span><span class="op">(</span><span class="st">"path/to/your/file.nc"</span><span class="op">)</span></span>
 <span></span>
@@ -165,7 +168,7 @@
 <div class="section level2">
 <h2 id="methodology">Methodology<a class="anchor" aria-label="anchor" href="#methodology"></a>
 </h2>
-<p>The development of NcLibrary followed a well-defined methodology, including phases such as problem identification, research and data collection, development of core functions, user interface design, testing and validation, library integration and documentation, performance evaluation, and package deployment. For a detailed breakdown of the methodology, please refer to the <a href="docs/Article.pdf">internship report</a>.</p>
+<p>The development of NcLibrary followed a well-defined methodology, including phases such as problem identification, research and data collection, development of core functions, user interface design, testing and validation, library integration and documentation, performance evaluation, and package deployment. For a detailed breakdown of the methodology, please refer to the <a href="https://davidjmz12.github.io/NcLibrary/Article.pdf">internship report</a>.</p>
 </div>
 <div class="section level2">
 <h2 id="issues-and-contributions">Issues and Contributions<a class="anchor" aria-label="anchor" href="#issues-and-contributions"></a>

@@ -4,6 +4,9 @@
     <loc>https://davidjmz12.github.io/NcLibrary/404.html</loc>
   </url>
   <url>
+    <loc>https://davidjmz12.github.io/NcLibrary/articles/Coordinate Functions.html</loc>
+  </url>
+  <url>
     <loc>https://davidjmz12.github.io/NcLibrary/articles/coordinate_functions.html</loc>
   </url>
   <url>
@@ -11,6 +14,12 @@
   </url>
   <url>
     <loc>https://davidjmz12.github.io/NcLibrary/articles/index.html</loc>
+  </url>
+  <url>
+    <loc>https://davidjmz12.github.io/NcLibrary/articles/NcLibrary.html</loc>
+  </url>
+  <url>
+    <loc>https://davidjmz12.github.io/NcLibrary/articles/Read NetCDF4 File.html</loc>
   </url>
   <url>
     <loc>https://davidjmz12.github.io/NcLibrary/articles/read_Nc_File.html</loc>
@@ -37,6 +46,9 @@
     <loc>https://davidjmz12.github.io/NcLibrary/reference/close_reticulate.html</loc>
   </url>
   <url>
+    <loc>https://davidjmz12.github.io/NcLibrary/reference/coord_is_inside.html</loc>
+  </url>
+  <url>
     <loc>https://davidjmz12.github.io/NcLibrary/reference/create_nc_file_app.html</loc>
   </url>
   <url>
@@ -50,6 +62,9 @@
   </url>
   <url>
     <loc>https://davidjmz12.github.io/NcLibrary/reference/get_subset_city.html</loc>
+  </url>
+  <url>
+    <loc>https://davidjmz12.github.io/NcLibrary/reference/get_subset_coordinates.html</loc>
   </url>
   <url>
     <loc>https://davidjmz12.github.io/NcLibrary/reference/index.html</loc>

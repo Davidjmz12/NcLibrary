@@ -17,24 +17,37 @@
   return(sapply(latitudes,fun))
 }
 
-#' @title Coordinate point is outside,
+#' All coordinates
+#'
+#' @param data_era data from ERA5 list.
+#' @param coordinates_m Matrix where each row is a coordinate (size nx2)
+#'
+#' @return true if all the coordinates are in the list
+#' @noRd
+.all_coordinates_inside_era <- function(data_era,coordinates_m)
+{
+  fun <- function(x){coord_is_inside(x, data_era$longitude$vals, data_era$latitude$vals)}
+  bools <- apply(coordinates_m,MARGIN=1,FUN=fun)
+  return(all(bools))
+}
+
+#' @title Coordinate point is inside the grid.
 #' @description
-#' Check if a coordinate limit is outside a 2D interval.
+#' Check if a coordinate limit is outside a grid of points
 #' 
 #'
-#' @param coordinate_str coordinate point
-#' @param limit_long longitude interval.
-#' @param limit_lat_str latitude interval.
+#' @param coordinate coordinate point
+#' @param longitude_v longitude array
+#' @param latitude_v latitude array
 #'
-#' @return TRUE if the coordinate point is outside the 2D interval
-#' @noRd
+#' @return TRUE if the coordinate point is inside the grid.
+#' @export
 #'
 #' @examples
-#' coord_is_not_inside(c(2,3),c(0,10),c(0,10))
-coord_is_not_inside <- function(coordinate_str, limit_long, limit_lat_str)
+#' coord_is_inside(c(2,3),c(0,10),c(0,10))
+coord_is_inside <- function(coordinate, longitude_v, latitude_v)
 {
-    return(coordinate_str[1]<limit_long[1] || coordinate_str[1]>limit_long[2] ||
-             coordinate_str[2]<limit_lat_str[1] || coordinate_str[2]>limit_lat_str[2])
+    return(coordinate[1] %in% longitude_v && coordinate[2] %in% latitude_v)
 
 }
 
@@ -42,7 +55,7 @@ coord_is_not_inside <- function(coordinate_str, limit_long, limit_lat_str)
 #'
 #' @param latitude latitude array in integer representation
 #'
-#' @return an array of strings with the string representation of latitude.
+#' @return An array of strings with the string representation of latitude.
 #' @export
 #'
 #' @examples

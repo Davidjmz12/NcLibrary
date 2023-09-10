@@ -1,0 +1,134 @@
+---
+title: "NcLibrary"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{NcLibrary}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  eval= FALSE
+)
+```
+
+
+## Introduction
+
+The **NcLibrary** package provides functions for retrieving data from ERA5 database directly to R. Additionally, it offers various functions for modifying existing lists.
+
+To install NcLibrary, use the following command:
+
+```{r setup, message=FALSE}
+devtools::install_github("Davidjmz12/NcLibrary")
+```
+
+For detailed summary of the library, refer to the [official documentation](https://davidjmz12.github.io/NcLibrary/).
+
+## Setting Up the Environment
+
+This section is meant for interested in creating requests to ERA5 databases.  If this is not applicable to your needs, feel free to skip this section.
+
+Firstly we must register on the [Climate Data Store](https://cds.climate.copernicus.eu/#!/home) to obtain a API key. 
+
+Upon successful registration, proceed by following the steps outlined in the  *Install the CDS API key* section of the [official guide](https://cds.climate.copernicus.eu/api-how-to). In case the URL or key of the guide file fails to appear, consider refreshing the page while ensuring that you are logged in. If the issue persists, you have the option to manually create the file and input the required data (your API key can be retrieved from your account information).
+
+Finally we have to set the *R* environment. As the execution of Python code is essential, the R library *reticulate* is employed. Moreover, we need to install some Python-libraries so an independent *conda* environment will be created. Please note that if this configuration has been completed previously, it may be skipped.
+
+```{r}
+set_reticulate()
+```
+
+If the *reticulate* environment is no longer needed, it can be deleted using the following function:
+
+```{r}
+close_reticulate()
+```
+
+## Temperature in Spain at 2000
+
+### Data Preparation
+
+The **NcLibrary** contains a range of functions for obtaining desired information from the **ERA5 Complete Reanalysis Database**.  In this example we will be extracting the daily temperature at 12:00 in the *Iberian Peninsula* with a grid resolution of 1x1 degrees. We select full levels at 171 hPa and 820 hPa.
+
+Two methods are available for retrieving this data:
+
+(a) Use the User Interface via `create_nc_file_app()`.
+
+(b) Employ the function `create_nc_file_data()` to do it manually.
+
+In our example, we will use the second method. However, it is crucial to have the IDs of the desired variables and levels (for more information, refer to the [variables](https://apps.ecmwf.int/codes/grib/param-db/) and [levels](https://confluence.ecmwf.int/display/UDOC/L137+model+level+definitions)) hyperlinks).
+
+With all the information collected, we create a file "data/example.nc" using the previously mentioned function.
+```{r, message=FALSE}
+library(NcLibrary)
+create_nc_file_data("71,112","12:00:00","1.0x1.0","data/example.nc","2000/01/01","2000/12/31","40/-15/30/15", "130")
+```
+
+Please be aware that this function can be rather slow for substantial data requests. Once this function finishes,  a *.nc* file containing all the data will be created. 
+
+### Information of the nNetCDF file
+
+After generating a .nc file, it is essential to access a preview of the information contained within. This enables efficient utilization of functions (e.g., selecting variable names). To achieve this, the `fetch_information()` function can be utilized, yielding a list with valuable insights regarding the .nc file.
+
+```{r}
+fetch_information("data/example.nc")
+```
+### Data Formatting
+
+The next step involves formatting the file.   This is accomplished using the `read_nc_file()` which returns a list with the information of the file. In this instance, we will employ the basic functionality of the function. For further details, please consult  `help("read_nc_file")`.
+
+```{r}
+spain_list <- read_nc_file("data/example.nc")
+```
+
+Suppose our interest lies in studying temperature specifically within the Madrid region. Rather than initiating a new request and downloading the relevant data points, we can take advantage of two functions:
+
+(1) `get_subset_city()` which requires the name of a city 
+
+(2) `get_subset_coordinates()` which takes an array with the coordinate point.
+
+In this example, we will be using the first one. Keep in mind that the point retrieved under the city name "Madrid" may not correspond precisely to the location of interest.
+
+In this function we need to use a variable called `depth` signifying the number of adjacent points surrounding the desired coordinate. To clear this out the following image represent a depth of 2 (left) and 3 (right).
+
+```{r}
+madrid_list <- get_subset_city(spain_list,"Madrid",depth=3)
+```
+
+<div>
+<center>
+<img src="data/grid.png" style="padding: 10px"  width="300"/>
+<center>
+*Figure 1: Depth explanation.*
+</div>
+
+
+## Observed temperature in Madrid
+
+The previous section contains the main functions of the library. In addition to that, there are functions to extract data from **ECAD databases**.
+
+### Data Preparation
+
+In this case the ECAD page already have a interface to request the data directly (see [here](https://www.ecad.eu/dailydata/customquery.php)). Therefore, the request must be done beforehand. In this example, we will imagine that we have a file called **data/madrid_t.zip** with the blended data of the station *Madrid-Barajas* in a period of time containing the year 2000.
+
+### Format the data
+
+Upon downloading the data, extraction can be performed using the `read_eca_zip()` function. It returns a list with the data of all the files within the **.zip** file. It is important to use the parameter `blended` to indicate whether our file is blended or not. 
+
+```{r}
+madrid_obs <- read_eca_zip("data/madrid_t.zip",blended=TRUE)
+```
+
+Sometimes it is useful to work with a data frame containing the observed values alongside reanalysis data. The function `get_merge_observed()` join a ERA5 list with a variable of the ECAD list. For example, supposing that there is a variable called **var_example** in the list:
+
+```{r}
+
+new_list <- get_merge_observed(madrid_list,madrid_obs$vars$var_example,name_col="Madrid-Barajas")
+
+```
+
+This function will return a new list with the same data as the ERA5 list but the data-frame will contain the observed values.

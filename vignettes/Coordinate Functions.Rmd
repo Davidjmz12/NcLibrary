@@ -1,8 +1,8 @@
 ---
-title: "coordinate_functions"
+title: "Coordinate Functions"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{coordinate_functions}
+  %\VignetteIndexEntry{Coordinate Functions}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -35,7 +35,7 @@ str_to_lon(lon)
 str_to_lat(lat)
 ```
 
-Finally the functions return error if it is not a good string representation.
+The functions return error if it is not a good string representation.
 
 ```{r}
 
@@ -45,5 +45,16 @@ lat <- c("10N") # Wrong latitude
 tryCatch({str_to_lon(lon)},error=function(e) print(e))
 
 tryCatch({str_to_lat(lat)},error=function(e) print(e))
+```
+
+Finally there is a function to check if a coordinate is inside a grid given by the two arrays of latitude and longitude:
+
+```{r}
+
+lon <- c(1,2,3,4,5)
+lat <- c(4,5,6,7,8)
+
+coord_is_inside(c(5,5), lon, lat) #Inside
+coord_is_inside(c(3,3), lon, lat) #Not inside 
 ```
 

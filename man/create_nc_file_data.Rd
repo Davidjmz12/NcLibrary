@@ -12,11 +12,12 @@ create_nc_file_data(
   start_date,
   end_date,
   coordinates,
-  variables
+  variables,
+  units_num
 )
 }
 \arguments{
-\item{levels}{geo potential levels requested joined by comma ",". The range is from 1 to 127 both included}
+\item{levels}{levels id requested joined by comma ",". The range is from 1 to 127 both included}
 
 \item{hours}{requested in HH:MM:SS format joined by comma ",".}
 
@@ -31,6 +32,8 @@ create_nc_file_data(
 \item{coordinates}{string with the four coordinates joined by slash "/" (N/W/E/S)}
 
 \item{variables}{integer representation of the variables to request joined by comma ",".}
+
+\item{units_num}{number column of the unit of the level. 3 for half-level level, 5 for Geopotential altitude and 7 for Temperature}
 }
 \description{
 Create a request to ERA5 complete reanalysis database and return a .nc
@@ -38,5 +41,7 @@ file with the data requested
 }
 \seealso{
 \url{https://apps.ecmwf.int/codes/grib/param-db/}
+
+\url{https://confluence.ecmwf.int/display/UDOC/L137+model+level+definitions}
 }
 \keyword{internal}

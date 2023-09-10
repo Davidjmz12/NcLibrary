@@ -137,6 +137,9 @@ utils::globalVariables(c("DATE", "aux", "x"))
     aux <- .get_coordinates(private_var)
     longitude <- aux$longitude
     latitude <- aux$latitude
+    
+    level_units <- private_var$nc_data$dim$level$units
+    level_value <- paste0(round(as.double(level_value),2),level_units)
 
     hours <- .get_hours(hourly_column, private_var, extended_hours)
 
@@ -227,29 +230,35 @@ utils::globalVariables(c("DATE", "aux", "x"))
 #' Return a grid of a specified depth surrounding a city.
 #'
 #' @param data_era data from ERA5 list.
-#' @param city_name name of the city
+#' @param coordinates coordinate point
 #' @param depth of the grid
 #'
 #' @return a grid of coordinate points surrounding the city.
-#' @importFrom tmaptools geocode_OSM
 #' @noRd
-.get_grid_city <- function(data_era, city_name, depth=1)
+.get_grid_coordinate <- function(data_era, coordinates, depth=1)
 {
 	lat <- data_era$latitude$vals
 	lon <- data_era$longitude$vals
-	coordinates <- unname(geocode_OSM(city_name)$coords)
-	if(coord_is_not_inside(coordinates, data_era$longitude$range, data_era$latitude$range))
+	if(!coord_is_inside(coordinates, data_era$longitude$vals, data_era$latitude$vals))
 	{
-		stop("City out of range.\n")
-	}
-	if(is.null(coordinates))
-	{
-		stop("City not found.\n")
+		stop("Coordinate of range.\n")
 	}
 	xgrid <- .get_grid_1D(lon,depth,coordinates[1])
 	ygrid <- .get_grid_1D(lat,depth,coordinates[2])
+	
+	mx <- min(xgrid)
+	my <- min(ygrid)
+	Mx <- max(xgrid)
+	My <- max(ygrid)
+	
+	if(!.all_coordinates_inside_era(data_era,matrix(data=c(Mx,Mx,mx,mx,My,my,My,my),ncol=2,nrow=4)))
+	{
+	  warning("Some points are out of range.\n")
+	}
 	return(list(x=xgrid,y=ygrid))
 }
+
+
 
 #' Create the variable with information of the .nc file
 #'
@@ -375,7 +384,7 @@ read_nc_file <- function(nc_file, reduction.x=1L,reduction.y=1L,sep="_", hourly.
 
   fun_val <- function(x,hourly.col)
   {
-      geo_level <- as.integer(x$Var1)
+      geo_level <- x$Var1
       var <- as.character(x$Var2)
       mat_values <- .data_values(var, geo_level, hourly.col, private_var)
       return(mat_values)
@@ -401,7 +410,7 @@ read_nc_file <- function(nc_file, reduction.x=1L,reduction.y=1L,sep="_", hourly.
 
   aux <- .get_coordinates(private_var)
   l <- list(temporal_info=list(daily=hourly.col, first=min(row_names$DATE),last=max(row_names$DATE),vals=row_names$DATE),
-            df=df,vars=var.names,geo_levels=geo.levels,creation_time=as.character(Sys.time()),
+            df=df,vars=var.names,geo_levels=geo.levels,geo.units = private_var$nc_data$dim$level$units, creation_time=as.character(Sys.time()),
             extended_hours=extended.hours,hours=.get_hours(TRUE, private_var,extended.hours),grid=aux$grid,
             latitude = list(range=list(min=str_to_lat(aux$lat_mm$min),max=str_to_lat(aux$lat_mm$max)),vals=str_to_lat(aux$latitude)),
             longitude= list(range=list(min=str_to_lon(aux$long_mm$min),max=str_to_lon(aux$long_mm$max)),vals=str_to_lon(aux$longitude)),
@@ -513,24 +522,43 @@ get_merge_observed <- function(data_era, data_obs,
 #'
 #' @return the "ERA5" subset.
 #' @seealso \code{\link{read_nc_file}}
+#' 
+#' @importFrom tmaptools geocode_OSM
 #' @export
 get_subset_city <- function(data_era, city_name, depth=1)
 {
-	lon_lat <- .get_grid_city(data_era, city_name, depth)
-	grid <- expand.grid(lon_lat$x,lon_lat$y)
-	grid[,1] <- lon_to_str(grid[,1])
-	grid[,2] <- lat_to_str(grid[,2])
-	names <- apply(grid,MARGIN=1,FUN=function(x) paste0(data_era$sep,paste(x,collapse=data_era$sep),data_era$sep))
-	names <- c(names,paste0("OBS",data_era$sep),"YEAR","MONTH","DAY","DATE","HOUR","MINUTE","SECOND","HOUR_EXT")
-	reg <- paste(names, collapse="|")
-  bools <- sapply(colnames(data_era$df), function(item1) any(grepl(reg, item1)))
-	data_era$df <- data_era$df[,bools]
-	data_era$latitude$vals <- lon_lat$y
-	data_era$longitude$vals <- lon_lat$x
-	data_era <- c(data_era,list(city_cap=city_name))
-	return(data_era)
+  coord_city <- unname(geocode_OSM(city_name)$coords)
+  return(get_subset_coordinates(data_era,coord_city,depth))
 }
 
+#' @title Subset grid by coordinate point
+#' 
+#' @description
+#' Function that returns a subset of a "ERA5" list around a coordinate.
+#'
+#' @param data_era "ERA5" list to modify.
+#' @param coordinate array with the longitude and latitude.
+#' @param depth of the net to subset.
+#'
+#' @return the "ERA5" subset.
+#' @seealso \code{\link{read_nc_file}}
+#' @export
+get_subset_coordinates <- function(data_era, coordinate, depth=1)
+{
+  cord_grid <- .get_grid_coordinate(data_era,coordinate,depth)
+  grid <- expand.grid(cord_grid$x, cord_grid$y)
+  grid[,1] <- lon_to_str(grid[,1])
+  grid[,2] <- lat_to_str(grid[,2])
+  names <- apply(grid,MARGIN=1,FUN=function(x) paste0(data_era$sep,paste(x,collapse=data_era$sep),data_era$sep))
+  names <- c(names,paste0("OBS",data_era$sep),"YEAR","MONTH","DAY","DATE","HOUR","MINUTE","SECOND","HOUR_EXT")
+  reg <- paste(names, collapse="|")
+  bools <- sapply(colnames(data_era$df), function(item1) any(grepl(reg, item1)))
+  data_era$df <- data_era$df[,bools]
+  data_era$latitude$vals <- cord_grid[2]
+  data_era$longitude$vals <- cord_grid[1]
+  data_era <- c(data_era,list(coordinate_subset=coordinate))
+  return(data_era)
+}
 
 #' Create python environment
 #' @importFrom reticulate use_condaenv
@@ -578,13 +606,14 @@ create_nc_file_app <- function()
 	if("ncLib-reticulate" %in% list)
 	{
     use_condaenv("ncLib-reticulate")
-    file <- system.file("var_names.csv",package="NcLibrary")
-    df <- read.csv(file, sep=",")
-    csv_path <- system.file("logo.png",package="NcLibrary")
+    file_var <- system.file("var_names.csv",package="NcLibrary")
+    df_var <- read.csv(file_var, sep=",")
+    file_lvl <- system.file("geo_names.csv", package="NcLibrary")
+    df_lvl <- read.csv(file_lvl,sep=",")
   
     source_python(system.file("app_era5.py",package="NcLibrary"))
     app <- import_from_path("app_era5", file.path(system.file(package = "NcLibrary")))$app
-    app(df,csv_path)
+    app(df_var,df_lvl)
 	}
 	else{
 	  stop("It is needed to execute set_reticulate() before using this function.")
@@ -597,7 +626,7 @@ create_nc_file_app <- function()
 #' Create a request to ERA5 complete reanalysis database and return a .nc
 #' file with the data requested
 #'
-#' @param levels geo potential levels requested joined by comma ",". The range is from 1 to 127 both included
+#' @param levels levels id requested joined by comma ",". The range is from 1 to 127 both included
 #' @param hours requested in HH:MM:SS format joined by comma ",".
 #' @param grid of the longitude-latitude net in RxR format where R stands for a real number
 #' @param target name of the .nc file. Must end with ".nc" extension.
@@ -605,21 +634,35 @@ create_nc_file_app <- function()
 #' @param end_date last day to request in format YYYY/MM/DD (included).
 #' @param coordinates string with the four coordinates joined by slash "/" (N/W/E/S)
 #' @param variables integer representation of the variables to request joined by comma ",".
+#' @param units_num number column of the unit of the level. 3 for half-level level, 5 for Geopotential altitude and 7 for Temperature
 #' @seealso \url{https://apps.ecmwf.int/codes/grib/param-db/}
+#' @seealso \url{https://confluence.ecmwf.int/display/UDOC/L137+model+level+definitions}
 #' @importFrom reticulate source_python
 #' @importFrom reticulate conda_list
 #' @importFrom reticulate import_from_path
 #' @keywords internal
 #' @export
-create_nc_file_data <- function(levels, hours, grid, target, start_date, end_date, coordinates, variables)
+create_nc_file_data <- function(levels, hours, grid, target, start_date, end_date, coordinates, variables, units_num)
 {
 	list <- conda_list()$name
 	if("ncLib-reticulate" %in% list)
 	{
-	  use_condaenv("ncLib-reticulate")
-	  source_python(system.file("request_data.py",package="NcLibrary"))
-	  make_request <- import_from_path("request_data", file.path(system.file(package = "NcLibrary")))$make_request
-	  make_request(levels, hours, grid, target, start_date, end_date, coordinates, variables)
+	  if(units_num %in% c(3,5,7))
+	  {
+	    use_condaenv("ncLib-reticulate")
+	    source_python(system.file("request_data.py",package="NcLibrary"))
+	    make_request <- import_from_path("request_data", file.path(system.file(package = "NcLibrary")))$make_request
+	    
+	    file_lvl <- system.file("geo_names.csv", package="NcLibrary")
+	    df_lvl <- read.csv(file_lvl,sep=",")
+	    
+	    make_request(levels, hours, grid, target, start_date, end_date, coordinates, variables, df_lvl)	    
+	  }
+	  else
+	  {
+	    stop("units_num must be 3,5 or 7")
+	  }
+
 	}
 	else{
 	  stop("It is needed to execute set_reticulate() before using this function.")

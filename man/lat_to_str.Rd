@@ -10,7 +10,7 @@ lat_to_str(latitude)
 \item{latitude}{latitude array in integer representation}
 }
 \value{
-an array of strings with the string representation of latitude.
+An array of strings with the string representation of latitude.
 }
 \description{
 Latitude integer to string representation
