@@ -134,8 +134,8 @@ frame.</p>
 <span><span class="co">#&gt;         DATE DAY MONTH YEAR t_100_1E_1N_00h t_100_1W_1N_00h t_10_0E_1S_12h</span></span>
 <span><span class="co">#&gt; 1 2000-01-01   1     1 2000        273.6527        273.7195       246.4498</span></span>
 <span><span class="co">#&gt; 2 2000-01-02   2     1 2000        273.9540        273.8012       244.7997</span></span></code></pre></div>
-<p>This is the default configuration. However there are a lot of other
-features. For example if the .nc file has a very thin density which is
+<p>This is the default configuration. However, there are a lot of other
+features. For example, if the .nc file has a very thin density which is
 not really needed, we can apply a reduction in both directions. By doing
 this, the resulting data frame will be reduced considerably.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
@@ -148,7 +148,7 @@ this, the resulting data frame will be reduced considerably.</p>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="st">"Data frame dimension with two times reduction in both directions:"</span>, <span class="fu"><a href="https://rdrr.io/r/base/dim.html" class="external-link">dim</a></span><span class="op">(</span><span class="va">test_2_r</span><span class="op">$</span><span class="va">df</span><span class="op">)</span>, <span class="st">"\n"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Data frame dimension with two times reduction in both directions: 3 1768</span></span></code></pre></div>
-<p>Moreover a list of variables and levels can be selected from the
+<p>Moreover, a list of variables and levels can be selected from the
 whole file. To see which variables the .nc file holds we can use the
 function <code>fetch_information</code>.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
@@ -156,7 +156,7 @@ function <code>fetch_information</code>.</p>
 <span><span class="co">#&gt; [1] "t" "u"</span></span>
 <span><span class="fu"><a href="../reference/fetch_information.html">fetch_information</a></span><span class="op">(</span><span class="st">"data/one_test.nc"</span><span class="op">)</span><span class="op">$</span><span class="va">geo_levels</span></span>
 <span><span class="co">#&gt; [1] 100  10</span></span></code></pre></div>
-<p>Now with this information we can just choose a selection of them and
+<p>Now with this information, we can just choose a selection of them and
 the resulting list will only have this information.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">test_3</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/read_nc_file.html">read_nc_file</a></span><span class="op">(</span><span class="st">"data/one_test.nc"</span>,var.names<span class="op">=</span><span class="st">"u"</span>,geo.levels <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span>
@@ -164,11 +164,11 @@ the resulting list will only have this information.</p>
 <span><span class="co">#&gt; Variables:  u</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="st">"Levels: "</span>, <span class="va">test_3</span><span class="op">$</span><span class="va">geo_levels</span>, <span class="st">"\n"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Levels:  10</span></span></code></pre></div>
-<p>Sometimes a full hour representation is needed. To work with extended
+<p>Sometimes a full-hour representation is needed. To work with extended
 hours is important to use the parameter
-<code>extended.hours=TRUE</code>. Moreover we can change the separator
+<code>extended.hours=TRUE</code>. Moreover, we can change the separator
 character in the column names by using <code>sep</code>. With this
-configuration keep in mind that “:” is reserved for hours and can make
+configuration keep in mind that “:” is reserved for hours and can cause
 confusion if you use it as a separator.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">test_4</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/read_nc_file.html">read_nc_file</a></span><span class="op">(</span><span class="st">"data/one_test.nc"</span>,extended.hours<span class="op">=</span><span class="cn">TRUE</span>, sep<span class="op">=</span><span class="st">"-"</span><span class="op">)</span></span>
@@ -178,8 +178,8 @@ confusion if you use it as a separator.</p>
 <span><span class="co">#&gt; This example hours:  00:00:00h 12:00:00h</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="st">"One column name: "</span>, <span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">test_4</span><span class="op">$</span><span class="va">df</span><span class="op">)</span><span class="op">[</span><span class="fl">5</span><span class="op">]</span><span class="op">)</span></span>
 <span><span class="co">#&gt; One column name:  t-100-1E-1N-00:00:00h</span></span></code></pre></div>
-<p>Finally as default, the hours are a new dimension. However, this
-behavior can be change using the parameter
+<p>Finally, as default, the hours are a new dimension. However, this
+behavior can be changed using the parameter
 <code>hourly.col=FALSE</code>.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">test_5</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/read_nc_file.html">read_nc_file</a></span><span class="op">(</span><span class="st">"data/one_test.nc"</span>,hourly.col<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span></span>
@@ -189,10 +189,10 @@ behavior can be change using the parameter
 <span><span class="co">#&gt; 2 2000-01-01 12   12   1     1 2000       274.3574</span></span>
 <span><span class="co">#&gt; 3 2000-01-02 00    0   2     1 2000       273.9540</span></span>
 <span><span class="co">#&gt; 4 2000-01-02 12   12   2     1 2000       273.5714</span></span></code></pre></div>
-<p>In this example we see that the hours are new row entries in the data
-frame. Note that this configuration combined with
+<p>In this example, we see that the hours are new row entries in the
+data frame. Note that this configuration combined with
 <code>extended.hours=TRUE</code> produces new columns with the seconds,
-minutes and the full extended hour:</p>
+minutes, and the full extended hour:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">test_6</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/read_nc_file.html">read_nc_file</a></span><span class="op">(</span><span class="st">"data/one_test.nc"</span>,hourly.col<span class="op">=</span><span class="cn">FALSE</span>, extended.hours<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="va">test_6</span><span class="op">$</span><span class="va">df</span><span class="op">[</span>,<span class="fl">1</span><span class="op">:</span><span class="fl">9</span><span class="op">]</span></span>

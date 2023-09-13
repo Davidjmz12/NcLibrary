@@ -142,16 +142,29 @@
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/Davidjmz12/NcLibrary" class="external-link">NcLibrary</a></span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
+<h2 id="setting-up-the-environment">Setting Up the Environment<a class="anchor" aria-label="anchor" href="#setting-up-the-environment"></a>
+</h2>
+<p>This section is meant for those interested in creating requests to ERA5 databases. If this is not applicable to your needs, feel free to skip this section.</p>
+<p>Firstly we must register on the <a href="https://cds.climate.copernicus.eu/#!/home" class="external-link">Climate Data Store</a> to obtain an API key.</p>
+<p>Upon successful registration, proceed by following the steps outlined in the <em>Install the CDS API key</em> section of the <a href="https://cds.climate.copernicus.eu/api-how-to" class="external-link">official guide</a>. In case the URL or key of the guide file fails to appear, consider refreshing the page while ensuring that you are logged in.</p>
+<p>Finally, we have to set the <em>R</em> environment. As the execution of Python code is essential, the R library <em>reticulate</em> is employed. An independent <em>conda</em> environment with the libraries needed will be created after using the following function. Please note that if this configuration has been completed previously, it may be skipped.</p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="reference/set_reticulate.html">set_reticulate</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<p>If the <em>reticulate</em> environment is no longer needed, it can be deleted using the following function:</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="reference/close_reticulate.html">close_reticulate</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+</div>
+<div class="section level2">
 <h2 id="example">Example<a class="anchor" aria-label="anchor" href="#example"></a>
 </h2>
 <p>Here’s a simple example of how to use the library to retrieve ERA5 data:</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/Davidjmz12/NcLibrary" class="external-link">NcLibrary</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Create a NetCDF file using the user interface</span></span>
 <span><span class="fu"><a href="reference/create_nc_file_app.html">create_nc_file_app</a></span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># Set python evironment.</span></span>
+<span><span class="co"># Set python environment.</span></span>
 <span><span class="fu"><a href="reference/set_reticulate.html">set_reticulate</a></span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Read the NetCDF file and convert it to a data frame</span></span>

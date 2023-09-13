@@ -123,34 +123,31 @@
 <h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
 </h2>
 <p>The <strong>NcLibrary</strong> package provides functions for
-retrieving data from ERA5 database directly to R. Additionally, it
+retrieving data from the ERA5 database directly to R. Additionally, it
 offers various functions for modifying existing lists.</p>
 <p>To install NcLibrary, use the following command:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"Davidjmz12/NcLibrary"</span><span class="op">)</span></span></code></pre></div>
-<p>For detailed summary of the library, refer to the <a href="https://davidjmz12.github.io/NcLibrary/">official
+<p>For a detailed summary of the library, refer to the <a href="https://davidjmz12.github.io/NcLibrary/">official
 documentation</a>.</p>
 </div>
 <div class="section level2">
 <h2 id="setting-up-the-environment">Setting Up the Environment<a class="anchor" aria-label="anchor" href="#setting-up-the-environment"></a>
 </h2>
-<p>This section is meant for interested in creating requests to ERA5
-databases. If this is not applicable to your needs, feel free to skip
-this section.</p>
+<p>This section is meant for those interested in creating requests to
+ERA5 databases. If this is not applicable to your needs, feel free to
+skip this section.</p>
 <p>Firstly we must register on the <a href="https://cds.climate.copernicus.eu/#!/home" class="external-link">Climate Data Store</a>
-to obtain a API key.</p>
+to obtain an API key.</p>
 <p>Upon successful registration, proceed by following the steps outlined
 in the <em>Install the CDS API key</em> section of the <a href="https://cds.climate.copernicus.eu/api-how-to" class="external-link">official guide</a>.
 In case the URL or key of the guide file fails to appear, consider
-refreshing the page while ensuring that you are logged in. If the issue
-persists, you have the option to manually create the file and input the
-required data (your API key can be retrieved from your account
-information).</p>
-<p>Finally we have to set the <em>R</em> environment. As the execution
+refreshing the page while ensuring that you are logged in.</p>
+<p>Finally, we have to set the <em>R</em> environment. As the execution
 of Python code is essential, the R library <em>reticulate</em> is
-employed. Moreover, we need to install some Python-libraries so an
-independent <em>conda</em> environment will be created. Please note that
-if this configuration has been completed previously, it may be
+employed. An independent <em>conda</em> environment with all the
+libraries needed will be created using the following function. Please
+note that if this configuration has been completed previously, it may be
 skipped.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/set_reticulate.html">set_reticulate</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
@@ -167,7 +164,7 @@ deleted using the following function:</p>
 </h3>
 <p>The <strong>NcLibrary</strong> contains a range of functions for
 obtaining desired information from the <strong>ERA5 Complete Reanalysis
-Database</strong>. In this example we will be extracting the daily
+Database</strong>. In this example, we will be extracting the daily
 temperature at 12:00 in the <em>Iberian Peninsula</em> with a grid
 resolution of 1x1 degrees. We select full levels at 171 hPa and 820
 hPa.</p>
@@ -186,13 +183,13 @@ hyperlinks).</p>
 “data/example.nc” using the previously mentioned function.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/Davidjmz12/NcLibrary" class="external-link">NcLibrary</a></span><span class="op">)</span></span>
-<span><span class="fu"><a href="../reference/create_nc_file_data.html">create_nc_file_data</a></span><span class="op">(</span><span class="st">"71,112"</span>,<span class="st">"12:00:00"</span>,<span class="st">"1.0x1.0"</span>,<span class="st">"data/example.nc"</span>,<span class="st">"2000/01/01"</span>,<span class="st">"2000/12/31"</span>,<span class="st">"40/-15/30/15"</span>, <span class="st">"130"</span><span class="op">)</span></span></code></pre></div>
-<p>Please be aware that this function can be rather slow for substantial
-data requests. Once this function finishes, a <em>.nc</em> file
-containing all the data will be created.</p>
+<span><span class="fu"><a href="../reference/create_nc_file_data.html">create_nc_file_data</a></span><span class="op">(</span><span class="st">"71,112"</span>, <span class="st">"12:00:00"</span>, <span class="st">"1.0x1.0"</span>, <span class="st">"data/example.nc"</span>, <span class="st">"2000/01/01"</span>, <span class="st">"2000/12/31"</span>, <span class="st">"40/-15/30/15"</span>, <span class="st">"130"</span><span class="op">)</span></span></code></pre></div>
+<p>Please be aware that this function can be relatively slow for
+substantial data requests. Once this function finishes, a <em>.nc</em>
+file containing all the data will be created.</p>
 </div>
 <div class="section level3">
-<h3 id="information-of-the-nnetcdf-file">Information of the nNetCDF file<a class="anchor" aria-label="anchor" href="#information-of-the-nnetcdf-file"></a>
+<h3 id="netcdf-file-data-extraction">NetCDF file data extraction<a class="anchor" aria-label="anchor" href="#netcdf-file-data-extraction"></a>
 </h3>
 <p>After generating a .nc file, it is essential to access a preview of
 the information contained within. This enables efficient utilization of
@@ -224,7 +221,7 @@ the coordinate point.</p></li>
 <p>In this example, we will be using the first one. Keep in mind that
 the point retrieved under the city name “Madrid” may not correspond
 precisely to the location of interest.</p>
-<p>In this function we need to use a variable called <code>depth</code>
+<p>In this function, we need to use a variable called <code>depth</code>
 signifying the number of adjacent points surrounding the desired
 coordinate. To clear this out the following image represent a depth of 2
 (left) and 3 (right).</p>
@@ -248,7 +245,7 @@ databases</strong>.</p>
 <div class="section level3">
 <h3 id="data-preparation-1">Data Preparation<a class="anchor" aria-label="anchor" href="#data-preparation-1"></a>
 </h3>
-<p>In this case the ECAD page already have a interface to request the
+<p>In this case, the ECAD page already has an interface to request the
 data directly (see <a href="https://www.ecad.eu/dailydata/customquery.php" class="external-link">here</a>).
 Therefore, the request must be done beforehand. In this example, we will
 imagine that we have a file called <strong>data/madrid_t.zip</strong>
@@ -267,14 +264,14 @@ blended or not.</p>
 <code class="sourceCode R"><span><span class="va">madrid_obs</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/read_eca_zip.html">read_eca_zip</a></span><span class="op">(</span><span class="st">"data/madrid_t.zip"</span>,blended<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 <p>Sometimes it is useful to work with a data frame containing the
 observed values alongside reanalysis data. The function
-<code><a href="../reference/get_merge_observed.html">get_merge_observed()</a></code> join a ERA5 list with a variable of
+<code><a href="../reference/get_merge_observed.html">get_merge_observed()</a></code> joins an ERA5 list with a variable of
 the ECAD list. For example, supposing that there is a variable called
 <strong>var_example</strong> in the list:</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
 <span><span class="va">new_list</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_merge_observed.html">get_merge_observed</a></span><span class="op">(</span><span class="va">madrid_list</span>,<span class="va">madrid_obs</span><span class="op">$</span><span class="va">vars</span><span class="op">$</span><span class="va">var_example</span>,name_col<span class="op">=</span><span class="st">"Madrid-Barajas"</span><span class="op">)</span></span></code></pre></div>
 <p>This function will return a new list with the same data as the ERA5
-list but the data-frame will contain the observed values.</p>
+list but the data frame will contain the observed values.</p>
 </div>
 </div>
   </div>
