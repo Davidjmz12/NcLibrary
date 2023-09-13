@@ -49,15 +49,13 @@ Upon successful registration, proceed by following the steps outlined in
 the *Install the CDS API key* section of the [official
 guide](https://cds.climate.copernicus.eu/api-how-to). In case the URL or
 key of the guide file fails to appear, consider refreshing the page
-while ensuring that you are logged in. If the issue persists, you have
-the option to manually create the file and input the required data (your
-API key can be retrieved from your account information).
+while ensuring that you are logged in.
 
 Finally, we have to set the *R* environment. As the execution of Python
-code is essential, the R library *reticulate* is employed. Moreover,
-since we need to install some Python libraries, an independent *conda*
-environment will be created. Please note that if this configuration has
-been completed previously, it may be skipped.
+code is essential, the R library *reticulate* is employed. An
+independent *conda* environment with the libraries needed will be
+created after using the following function. Please note that if this
+configuration has been completed previously, it may be skipped.
 
 ``` r
 set_reticulate()
