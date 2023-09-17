@@ -61,6 +61,9 @@ configuration has been completed previously, it may be skipped.
 set_reticulate()
 ```
 
+If there is not any conda interpreter in your computer you could use,
+for example, the function `install_miniconda()`.
+
 If the *reticulate* environment is no longer needed, it can be deleted
 using the following function:
 
