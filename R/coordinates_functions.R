@@ -1,14 +1,14 @@
 
-#' Transform (0,360) longitude to (-180,180)
+#' Transform (0,360) coordinate format to (-180,180)
 #'
-#' @param longitudes array of latitudes
+#' @param v array of latitudes or longitudes
 #'
-#' @return array with the transformed longitudes
-#' @noRd
-#'
-#' @examples
+#' @return array with the transformed longitudes or latitudes
+#' @export
+#' 
+#' @example
 #' .transform_longitude(c(360,0))
-.transform_longitude <- function(latitudes)
+transform_longitude <- function(v)
 {
   fun <- function(lat)
   {
