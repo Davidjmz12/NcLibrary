@@ -7,10 +7,39 @@
 read_nc_file(configuration)
 }
 \arguments{
-\item{configuration}{of the request}
+\item{configuration}{A list containing the following fields:
+\describe{
+\item{sep}{A string specifying the column name separator.}
+\item{time}{A list with information about the "y" variable in the data frame. It must contain:
+\describe{
+\item{name}{The name of the time dimension in the .nc file.}
+\item{extended}{A boolean (TRUE if you want to include MINUTES and SECONDS in your time format).}
+\item{time_div}{A boolean (TRUE if you want extra columns with individual values of YEAR, DAY, MONTH, HOUR, etc.).}
+}
+}
+\item{nc_file}{A string with the name of the ".nc" file to read.}
+\item{dim}{A list of dimensions to include metadata. Each element is a list with:
+\describe{
+\item{type}{"lon" for longitude dimensions, "lat" for latitude dimensions, or "any" for other dimensions.}
+\item{For type "lon" or "lat":}{
+\describe{
+\item{coord_360}{A boolean indicating if the coordinate is given in the set \link{0,360}.}
+\item{name}{The name of the corresponding dimension in the .nc file.}
+\item{format}{0 if the value format is "+-xN" for latitude or "+-xE" for longitude, or 1 if the format is "+xN or +xS" for latitude or "+xE or +xW".}
+}
+}
+\item{For type "any":}{
+\describe{
+\item{units}{A string specifying the measurement units.}
+\item{round}{An integer specifying the number of decimals for dimension values.}
+}
+}
+}
+}
+}}
 }
 \value{
-a data-frame with the information of the request
+A data frame with the requested information.
 }
 \description{
 Read a .nc file

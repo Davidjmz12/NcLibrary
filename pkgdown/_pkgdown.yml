@@ -56,9 +56,6 @@ reference:
   - "transform_coordinate"
 - title: Data Manipulation functions
   contents:
-  - "get_merge_observed"
-  - "get_subset_city"
-  - "get_subset_coordinates"
   - "read_eca_zip"
   - "read_nc_file"
 - title: Set Python environment functions 

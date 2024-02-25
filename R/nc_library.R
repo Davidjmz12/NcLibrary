@@ -87,6 +87,13 @@ utils::globalVariables(c("DATE", "aux", "x"))
 }
 
 
+#' Modifier of dimension values of type "lat"
+#'
+#' @param configuration_dim of the dimension
+#' @param dim dimension of the nc file
+#'
+#' @return a formatted version of the column names for a dimension of type "lat".
+#' @noRd
 .transform_latitude <- function (configuration_dim,dim) {
 
 	values <- if(configuration_dim$coord_360) transform_coordinate(dim$vals) else{dim$vals}
@@ -97,6 +104,13 @@ utils::globalVariables(c("DATE", "aux", "x"))
 	}
 }
 
+#' Modifier of dimension values of type "lon"
+#'
+#' @param configuration_dim of the dimension
+#' @param dim dimension of the nc file
+#'
+#' @return a formatted version of the column names for a dimension of type "lon".
+#' @noRd
 .transform_longitude <- function (configuration_dim,dim) {
 
 	values <- if(configuration_dim$coord_360) transform_coordinate(dim$vals) else{dim$vals}
@@ -108,6 +122,13 @@ utils::globalVariables(c("DATE", "aux", "x"))
 }
 
 
+#' Modifier of dimension values of type "any"
+#'
+#' @param configuration_dim of the dimension
+#' @param dim dimension of the nc file
+#'
+#' @return a formatted version of the column names for a dimension of type "any".
+#' @noRd
 .transform_any_dim <- function (configuration_dim,dim){
 	units <- if(is.null(configuration_dim$units)) dim$units else configuration_dim$units
 	values <- if(is.null(configuration_dim$round)) dim$vals else round(dim$vals,configuration_dim$round)
@@ -258,26 +279,40 @@ utils::globalVariables(c("DATE", "aux", "x"))
 	)
 }
 
-.add_extra_info <- function (configuration){
-	aux_list <- list()
-	for(var in configuration$dim){
-		if (var$type == "lon"){
-			aux_list <- append(aux_list,list(lon=configuration$read_nc$dim[[var$name]]$vals))
-		}
-		if (var$type == "lat"){
-			aux_list <- append(aux_list,list(lat=configuration$read_nc$dim[[var$name]]$vals))
-		}
-	}
-
-	return(aux_list)
-}
-
-
 #' Read a .nc file
 #'
-#' @param configuration of the request
+#' @param configuration A list containing the following fields:
+#'   \describe{
+#'     \item{sep}{A string specifying the column name separator.}
+#'     \item{time}{A list with information about the "y" variable in the data frame. It must contain:
+#'       \describe{
+#'         \item{name}{The name of the time dimension in the .nc file.}
+#'         \item{extended}{A boolean (TRUE if you want to include MINUTES and SECONDS in your time format).}
+#'         \item{time_div}{A boolean (TRUE if you want extra columns with individual values of YEAR, DAY, MONTH, HOUR, etc.).}
+#'       }
+#'     }
+#'     \item{nc_file}{A string with the name of the ".nc" file to read.}
+#'     \item{dim}{A list of dimensions to include metadata. It can be empty but it must be included in configuration. Each element is a list with:
+#'       \describe{
+#'         \item{type}{"lon" for longitude dimensions, "lat" for latitude dimensions, or "any" for other dimensions.}
+#'         \item{For type "lon" or "lat":}{
+#'           \describe{
+#'             \item{coord_360}{A boolean indicating if the coordinate is given in the set [0,360].}
+#'             \item{name}{The name of the corresponding dimension in the .nc file.}
+#'             \item{format}{0 if the value format is "+-xN" for latitude or "+-xE" for longitude, or 1 if the format is "+xN or +xS" for latitude or "+xE or +xW".}
+#'           }
+#'         }
+#'         \item{For type "any":}{
+#'           \describe{
+#'             \item{units}{A string specifying the measurement units.}
+#'             \item{round}{An integer specifying the number of decimals for dimension values.}
+#'           }
+#'         }
+#'       }
+#'     }
+#'   }
 #'
-#' @return a data-frame with the information of the request
+#' @return A data frame with the requested information.
 #' @export
 read_nc_file <- function(configuration)
 {
@@ -298,7 +333,5 @@ read_nc_file <- function(configuration)
 	colnames(df) <- col_names
 	df <- cbind(row_names,df)
 
-	list_extra <- .add_extra_info(configuration)
-
-	return(list(df=df,configuration=configuration,extra=list_extra))
+	return(df)
 }

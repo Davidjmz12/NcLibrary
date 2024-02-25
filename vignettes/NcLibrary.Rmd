@@ -76,37 +76,22 @@ Please be aware that this function can be relatively slow for substantial data r
 After generating a .nc file, it is essential to access a preview of the information contained within. This enables efficient utilization of functions (e.g., selecting variable names). To achieve this, the `nc_open()` function of the `netcdf4` library can be utilized, returning a list with valuable insights regarding the .nc file.
 
 ```{r}
-head(nc_open("data/example.nc"),4)
+nc_open("data/example.nc")
 ```
 ### Data Formatting
 
-The next step involves formatting the file.   This is accomplished using the `read_nc_file()` which returns a dataframe with the information of the file. In this instance, we will employ the basic functionality of the function. For further details, please consult  `help("read_nc_file")`.
+The next step involves formatting the file.   This is accomplished using the `read_nc_file()` which returns a dataframe with the information of the file. In this example, we will create a basic configuration list to read our nc-file. For further details, please consult  `help("read_nc_file")`.
 
 ```{r}
-spain_list <- read_nc_file("data/example.nc")
+configuration <- list(dim=list(
+                                latitude=list(type="lat", coord_360=T, name="latitude", format=0),
+                                longitude=list(type="lon", coord_360=T, name="longitude", format=0)
+                              ),
+                       time=list(extended=F,time_div=T,name="time"),
+                       sep="_",
+                       nc_file="data/example.nc")
+spain_list <- read_nc_file(configuration)
 ```
-
-Suppose our interest lies in studying temperature specifically within the Madrid region. Rather than initiating a new request and downloading the relevant data points, we can take advantage of two functions:
-
-(1) `get_subset_city()` which requires the name of a city
-
-(2) `get_subset_coordinates()` which takes an array with the coordinate point.
-
-In this example, we will be using the first one. Keep in mind that the point retrieved under the city name "Madrid" may not correspond precisely to the location of interest.
-
-In this function, we need to use a variable called `depth` signifying the number of adjacent points surrounding the desired coordinate. To clear this out the following image represent a depth of 2 (left) and 3 (right).
-
-```{r}
-madrid_list <- get_subset_city(spain_list,"Madrid",depth=3)
-```
-
-<div>
-<center>
-<img src="data/grid.png" style="padding: 10px"  width="300"/>
-<center>
-*Figure 1: Depth explanation.*
-</div>
-
 
 ## Observed temperature in Madrid
 
@@ -123,13 +108,3 @@ Upon downloading the data, extraction can be performed using the `read_eca_zip()
 ```{r}
 madrid_obs <- read_eca_zip("data/madrid_t.zip",blended=TRUE)
 ```
-
-Sometimes it is useful to work with a data frame containing the observed values alongside reanalysis data. The function `get_merge_observed()` joins an ERA5 list with a variable of the ECAD list. For example, supposing that there is a variable called **var_example** in the list:
-
-```{r}
-
-new_list <- get_merge_observed(madrid_list,madrid_obs$vars$var_example,name_col="Madrid-Barajas")
-
-```
-
-This function will return a new list with the same data as the ERA5 list but the data frame will contain the observed values.
