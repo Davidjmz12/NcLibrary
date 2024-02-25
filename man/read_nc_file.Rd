@@ -18,7 +18,7 @@ read_nc_file(configuration)
 }
 }
 \item{nc_file}{A string with the name of the ".nc" file to read.}
-\item{dim}{A list of dimensions to include metadata. Each element is a list with:
+\item{dim}{A list of dimensions to include metadata. It can be empty but it must be included in configuration. Each element is a list with:
 \describe{
 \item{type}{"lon" for longitude dimensions, "lat" for latitude dimensions, or "any" for other dimensions.}
 \item{For type "lon" or "lat":}{

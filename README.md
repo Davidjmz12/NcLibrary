@@ -16,7 +16,6 @@ meteorological data within statistical research and analysis.
   ECAD databases.
 - Functions for extracting, processing, and merging meteorological data.
 - Support for converting between different coordinate representations.
-- Ability to subset data based on specific cities.
 - Comprehensive documentation for each function.
 
 ## Installation
@@ -81,14 +80,18 @@ library(NcLibrary)
 # Create a NetCDF file using the user interface
 create_nc_file_app()
 
-# Set python environment.
-set_reticulate()
+
+# Create a configuration for the request:
+configuration <- list(dim=list(
+                                latitude=list(type="lat", coord_360=T, name="latitude", format=0),
+                                longitude=list(type="lon", coord_360=T, name="longitude", format=0)
+                              ),
+                       time=list(extended=F,time_div=T,name="time"),
+                       sep="_",
+                       nc_file="path/to/your/file.nc")
 
 # Read the NetCDF file and convert it to a data frame
-data <- read_nc_file("path/to/your/file.nc")
-
-# Subset data for a specific city
-subset_data <- get_subset_city(data, city_name = "Your City Name")
+data <- read_nc_file(configuration)
 ```
 
 ## Documentation

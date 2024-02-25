@@ -41,7 +41,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">NcLibrary</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.0</span>
       </span>
     </div>
 
@@ -123,7 +123,6 @@
 <li>User-friendly interface for effortless data retrieval from ERA5 and ECAD databases.</li>
 <li>Functions for extracting, processing, and merging meteorological data.</li>
 <li>Support for converting between different coordinate representations.</li>
-<li>Ability to subset data based on specific cities.</li>
 <li>Comprehensive documentation for each function.</li>
 </ul>
 </div>
@@ -165,14 +164,18 @@
 <span><span class="co"># Create a NetCDF file using the user interface</span></span>
 <span><span class="fu"><a href="reference/create_nc_file_app.html">create_nc_file_app</a></span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># Set python environment.</span></span>
-<span><span class="fu"><a href="reference/set_reticulate.html">set_reticulate</a></span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Create a configuration for the request:</span></span>
+<span><span class="va">configuration</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>dim<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
+<span>                                latitude<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>type<span class="op">=</span><span class="st">"lat"</span>, coord_360<span class="op">=</span><span class="cn">T</span>, name<span class="op">=</span><span class="st">"latitude"</span>, format<span class="op">=</span><span class="fl">0</span><span class="op">)</span>,</span>
+<span>                                longitude<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>type<span class="op">=</span><span class="st">"lon"</span>, coord_360<span class="op">=</span><span class="cn">T</span>, name<span class="op">=</span><span class="st">"longitude"</span>, format<span class="op">=</span><span class="fl">0</span><span class="op">)</span></span>
+<span>                              <span class="op">)</span>,</span>
+<span>                       time<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>extended<span class="op">=</span><span class="cn">F</span>,time_div<span class="op">=</span><span class="cn">T</span>,name<span class="op">=</span><span class="st">"time"</span><span class="op">)</span>,</span>
+<span>                       sep<span class="op">=</span><span class="st">"_"</span>,</span>
+<span>                       nc_file<span class="op">=</span><span class="st">"path/to/your/file.nc"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Read the NetCDF file and convert it to a data frame</span></span>
-<span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/read_nc_file.html">read_nc_file</a></span><span class="op">(</span><span class="st">"path/to/your/file.nc"</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># Subset data for a specific city</span></span>
-<span><span class="va">subset_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/NcLibrary/man/get_subset_city.html" class="external-link">get_subset_city</a></span><span class="op">(</span><span class="va">data</span>, city_name <span class="op">=</span> <span class="st">"Your City Name"</span><span class="op">)</span></span></code></pre></div>
+<span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/read_nc_file.html">read_nc_file</a></span><span class="op">(</span><span class="va">configuration</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="documentation">Documentation<a class="anchor" aria-label="anchor" href="#documentation"></a>

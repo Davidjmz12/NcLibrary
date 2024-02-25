@@ -335,3 +335,14 @@ read_nc_file <- function(configuration)
 
 	return(df)
 }
+
+#' Fetch configuration information
+#'
+#' @param configuration of the request.
+#'
+#' @return A list with the important information stored in the .nc file.
+#' @export
+fetch_information <- function(configuration)
+{
+  return(nc_open(configuration$nc_file))
+}
