@@ -19,6 +19,20 @@
 	return(sort(head(df$x,2*depth)))
 }
 
+#' All coordinates
+#'
+#' @param data_era data from ERA5 list.
+#' @param coordinates_m Matrix where each row is a coordinate (size nx2)
+#'
+#' @return true if all the coordinates are in the list
+#' @noRd
+.all_coordinates_inside_era <- function(lat,lon,coordinates_m)
+{
+  fun <- function(x){coord_is_inside(x, lon, lat)}
+  bools <- apply(coordinates_m,MARGIN=1,FUN=fun)
+  return(all(bools))
+}
+
 #' Return a grid of a specified depth surrounding a city.
 #'
 #' @param data_era data from ERA5 list.
@@ -29,9 +43,10 @@
 #' @noRd
 .get_grid_coordinate <- function(data_era, coordinates, depth=1)
 {
-	lat <- data_era$latitude$vals
-	lon <- data_era$longitude$vals
-	if(!coord_is_inside(coordinates, data_era$longitude$vals, data_era$latitude$vals))
+	lat <- data_era$extra$lat
+	lon <- data_era$extra$lon
+
+	if(!coord_is_inside(coordinates, lon, lat))
 	{
 		stop("Coordinate of range.\n")
 	}
@@ -43,7 +58,7 @@
 	Mx <- max(xgrid)
 	My <- max(ygrid)
 
-	if(!.all_coordinates_inside_era(data_era,matrix(data=c(Mx,Mx,mx,mx,My,my,My,my),ncol=2,nrow=4)))
+	if(!.all_coordinates_inside_era(lat,lon,matrix(data=c(Mx,Mx,mx,mx,My,my,My,my),ncol=2,nrow=4)))
 	{
 	  warning("Some points are out of range.\n")
 	}
@@ -65,37 +80,28 @@
 #' @importFrom dplyr inner_join
 #' @export
 get_merge_observed <- function(data_era, data_obs,
-							   name_col=paste(data_obs$station_info$name, data_obs$var_info$name, sep=data_era$sep))
+							   name_col=paste(data_obs$station_info$name, data_obs$var_info$name, sep=data_era$configuration$sep))
 {
-    if(!data_era$temporal_info$daily)
-    {
-        stop("Data from ERAS5 must be daily.")
-    }
-    else
+	dates_era <- data_era$df$DATE
+	dates_eca <- data_obs$temporal_info$vals
+
+	new_time_set <- intersect(dates_era,dates_eca)
+	if((newlength <- length(new_time_set))==0)
 	{
-		dates_era <- data_era$temporal_info$vals
-        dates_eca <- data_obs$temporal_info$vals
-		new_time_set <- intersect(dates_era,dates_eca)
-		if((newlength <- length(new_time_set))==0)
-		{
-			stop("The intersection of both times data sets is 0. ")
-		}
-		else
-		{
-			if(newlength != length(dates_era)) warning("The observed data does not cover all the ERA5 data.")
-			auxy <- subset(data_obs$data, select=c("DATE", data_obs$var_info$name))
-			colnames(auxy) <- c("DATE",paste("OBS",name_col,sep=data_era$sep))
-			data_era$df <- inner_join(data_era$df,auxy,by= "DATE")
-			data_era$obs_values <- append(data_era$obs_values,name_col)
-			data_era$temporal_info$vals <- new_time_set
-			data_era$temporal_info$first <- min(new_time_set)
-			data_era$temporal_info$last <- max(new_time_set)
+		stop("The intersection of both times data sets is 0. ")
+	}
+	else
+	{
+		if(newlength != length(dates_era)) warning("The observed data does not cover all the ERA5 data.")
+		auxy <- subset(data_obs$data, select=c("DATE", data_obs$var_info$name))
+		colnames(auxy) <- c("DATE",paste("OBS",name_col,sep=data_era$configuration$sep))
+		data_era$df <- inner_join(data_era$df,auxy,by= "DATE")
 
-			return(data_era)
-		}
-
-    }
+		return(data_era)
+	}
 }
+
+cxc <- get_merge_observed(b,a$vars$CC_STAID000238)
 
 #' @title Subset grid city
 #'
@@ -131,17 +137,20 @@ get_subset_city <- function(data_era, city_name, depth=1)
 #' @export
 get_subset_coordinates <- function(data_era, coordinate, depth=1)
 {
-  cord_grid <- .get_grid_coordinate(data_era,coordinate,depth)
-  grid <- expand.grid(cord_grid$x, cord_grid$y)
-  grid[,1] <- lon_to_str(grid[,1])
-  grid[,2] <- lat_to_str(grid[,2])
-  names <- apply(grid,MARGIN=1,FUN=function(x) paste0(data_era$sep,paste(x,collapse=data_era$sep),data_era$sep))
-  names <- c(names,paste0("OBS",data_era$sep),"YEAR","MONTH","DAY","DATE","HOUR","MINUTE","SECOND","HOUR_EXT")
-  reg <- paste(names, collapse="|")
-  bools <- sapply(colnames(data_era$df), function(item1) any(grepl(reg, item1)))
-  data_era$df <- data_era$df[,bools]
-  data_era$latitude$vals <- cord_grid[2]
-  data_era$longitude$vals <- cord_grid[1]
-  data_era <- c(data_era,list(coordinate_subset=coordinate))
-  return(data_era)
+	if(!all(c("lat","lon") %in% data_era$extra)){
+		stop("There is not a two-coordinate dimension in the nc file.")
+	}
+
+	cord_grid <- .get_grid_coordinate(data_era,coordinate,depth)
+	grid <- expand.grid(cord_grid$x, cord_grid$y)
+	grid[,1] <- lon_to_str(grid[,1])
+	grid[,2] <- lat_to_str(grid[,2])
+	names <- apply(grid,MARGIN=1,FUN=function(x) paste0(data_era$configuration$sep,paste(x,collapse=data_era$configuration$sep),data_era$configuration$sep))
+	names <- c(names,paste0("OBS",data_era$configuration$sep),"YEAR","MONTH","DAY","DATE","HOUR","MINUTE","SECOND")
+	reg <- paste(names, collapse="|")
+	bools <- sapply(colnames(data_era$df), function(item1) any(grepl(reg, item1)))
+	data_era$df <- data_era$df[,bools]
+	data_era$extra$lat <- cord_grid[2]
+	data_era$extra$lon <- cord_grid[1]
+	return(data_era)
 }

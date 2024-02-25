@@ -6,30 +6,17 @@
 #' @return array with the transformed longitudes or latitudes
 #' @export
 #' 
-#' @example
-#' .transform_longitude(c(360,0))
-transform_longitude <- function(v)
+#' @examples
+#' transform_coordinate(c(360,0))
+transform_coordinate <- function(v)
 {
-  fun <- function(lat)
+  fun <- function(v)
   {
-    return ((lat+180)%%360-180)
+    return ((v+180)%%360-180)
   }
-  return(sapply(latitudes,fun))
+  return(sapply(v,fun))
 }
 
-#' All coordinates
-#'
-#' @param data_era data from ERA5 list.
-#' @param coordinates_m Matrix where each row is a coordinate (size nx2)
-#'
-#' @return true if all the coordinates are in the list
-#' @noRd
-.all_coordinates_inside_era <- function(data_era,coordinates_m)
-{
-  fun <- function(x){coord_is_inside(x, data_era$longitude$vals, data_era$latitude$vals)}
-  bools <- apply(coordinates_m,MARGIN=1,FUN=fun)
-  return(all(bools))
-}
 
 #' @title Coordinate point is inside the grid.
 #' @description

@@ -71,7 +71,7 @@ utils::globalVariables(c("DATE", "aux", "x"))
 
 #' Index of the configuration
 #'
-#' @param configuration of the request
+#' @param configuration of the request.
 #' @param dim dimension of the .nc file
 #'
 #' @return the index of the dimension or 0 if not found.
@@ -84,6 +84,34 @@ utils::globalVariables(c("DATE", "aux", "x"))
 	} else{
 		return(0)
 	}
+}
+
+
+.transform_latitude <- function (configuration_dim,dim) {
+
+	values <- if(configuration_dim$coord_360) transform_coordinate(dim$vals) else{dim$vals}
+	if(configuration_dim$format == 0){
+		return(paste0(values,"N"))
+	} else if(configuration_dim$format == 1){
+		return(lat_to_str(values))
+	}
+}
+
+.transform_longitude <- function (configuration_dim,dim) {
+
+	values <- if(configuration_dim$coord_360) transform_coordinate(dim$vals) else{dim$vals}
+	if(configuration_dim$format == 0){
+		return(paste0(values,"N"))
+	} else if(configuration_dim$format == 1){
+		return(lat_to_str(values))
+	}
+}
+
+
+.transform_any_dim <- function (configuration_dim,dim){
+	units <- if(is.null(configuration_dim$units)) dim$units else configuration_dim$units
+	values <- if(is.null(configuration_dim$round)) dim$vals else round(dim$vals,configuration_dim$round)
+	return(paste0(values,units))
 }
 
 #' Modifier of dimension values
@@ -102,26 +130,11 @@ utils::globalVariables(c("DATE", "aux", "x"))
 		configuration_dim <- configuration$dim[[ind_dim]]
 
 		if(configuration_dim$type=="lat"){
-			values <- if(configuration_dim$coord_360) transform_longitude(dim$vals) else{dim$vals}
-			if(configuration_dim$format == 0){
-				return(paste0(values,"N"))
-			} else if(configuration_dim$format == 1){
-				return(lat_to_str(values))
-			}
-
+			return(.transform_latitude(configuration_dim,dim))
 		} else if(configuration_dim$type=="lon"){
-			values <- if(configuration_dim$coord_360) transform_longitude(dim$vals) else dim$vals
-			if(configuration_dim$format == 0){
-				return(paste0(values,"E"))
-			} else if(configuration_dim$format == 1){
-				return(lon_to_str(values))
-			}
-
+			return(.transform_longitude(configuration_dim,dim))
 		} else if(configuration_dim$type=="any"){
-
-			units <- if(is.null(configuration_dim$units)) dim$units else configuration_dim$units
-			values <- if(is.null(configuration_dim$round)) dim$vals else round(dim$vals,configuration_dim$round)
-			return(paste0(values,units))
+			return(.transform_any_dim(configuration_dim,dim))
 		}
 	}
 
@@ -245,6 +258,21 @@ utils::globalVariables(c("DATE", "aux", "x"))
 	)
 }
 
+.add_extra_info <- function (configuration){
+	aux_list <- list()
+	for(var in configuration$dim){
+		if (var$type == "lon"){
+			aux_list <- append(aux_list,list(lon=configuration$read_nc$dim[[var$name]]$vals))
+		}
+		if (var$type == "lat"){
+			aux_list <- append(aux_list,list(lat=configuration$read_nc$dim[[var$name]]$vals))
+		}
+	}
+
+	return(aux_list)
+}
+
+
 #' Read a .nc file
 #'
 #' @param configuration of the request
@@ -270,13 +298,7 @@ read_nc_file <- function(configuration)
 	colnames(df) <- col_names
 	df <- cbind(row_names,df)
 
-	return(df)
+	list_extra <- .add_extra_info(configuration)
+
+	return(list(df=df,configuration=configuration,extra=list_extra))
 }
-
-library("ncdf4")
-
-configuration <- list(dim=list(	latitude=list(type="lat", coord_360=T, name="latitude", format=0),
-                      			longitude=list(type="lon", coord_360=T, name="longitude", format=0)),
-                      time=list(extended=F,time_div=T,name="time"),
-                      sep="_",
-                      nc_file="pruebas2.nc")

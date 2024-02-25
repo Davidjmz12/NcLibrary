@@ -73,14 +73,14 @@ Please be aware that this function can be relatively slow for substantial data r
 
 ### NetCDF file data extraction
 
-After generating a .nc file, it is essential to access a preview of the information contained within. This enables efficient utilization of functions (e.g., selecting variable names). To achieve this, the `fetch_information()` function can be utilized, yielding a list with valuable insights regarding the .nc file.
+After generating a .nc file, it is essential to access a preview of the information contained within. This enables efficient utilization of functions (e.g., selecting variable names). To achieve this, the `nc_open()` function of the `netcdf4` library can be utilized, returning a list with valuable insights regarding the .nc file.
 
 ```{r}
-fetch_information("data/example.nc")
+head(nc_open("data/example.nc"),4)
 ```
 ### Data Formatting
 
-The next step involves formatting the file.   This is accomplished using the `read_nc_file()` which returns a list with the information of the file. In this instance, we will employ the basic functionality of the function. For further details, please consult  `help("read_nc_file")`.
+The next step involves formatting the file.   This is accomplished using the `read_nc_file()` which returns a dataframe with the information of the file. In this instance, we will employ the basic functionality of the function. For further details, please consult  `help("read_nc_file")`.
 
 ```{r}
 spain_list <- read_nc_file("data/example.nc")
@@ -88,7 +88,7 @@ spain_list <- read_nc_file("data/example.nc")
 
 Suppose our interest lies in studying temperature specifically within the Madrid region. Rather than initiating a new request and downloading the relevant data points, we can take advantage of two functions:
 
-(1) `get_subset_city()` which requires the name of a city 
+(1) `get_subset_city()` which requires the name of a city
 
 (2) `get_subset_coordinates()` which takes an array with the coordinate point.
 
@@ -118,7 +118,7 @@ In this case, the ECAD page already has an interface to request the data directl
 
 ### Format the data
 
-Upon downloading the data, extraction can be performed using the `read_eca_zip()` function. It returns a list with the data of all the files within the **.zip** file. It is important to use the parameter `blended` to indicate whether our file is blended or not. 
+Upon downloading the data, extraction can be performed using the `read_eca_zip()` function. It returns a list with the data of all the files within the **.zip** file. It is important to use the parameter `blended` to indicate whether our file is blended or not.
 
 ```{r}
 madrid_obs <- read_eca_zip("data/madrid_t.zip",blended=TRUE)

@@ -53,6 +53,7 @@ reference:
   - "str_to_lon"
   - "str_to_lat"
   - "coord_is_inside"
+  - "transform_coordinate"
 - title: Data Manipulation functions
   contents:
   - "get_merge_observed"
@@ -64,12 +65,6 @@ reference:
   contents:
   - "set_reticulate"
   - "close_reticulate"
-- title: General information functions
-  contents:
-  - "fetch_information"
-- title: Write in file functions
-  contents:
-  - "write_csv"
 
 authors:
   David Jimñenez Omeñaca:
