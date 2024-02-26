@@ -4,10 +4,10 @@
 \alias{fetch_information}
 \title{Fetch configuration information}
 \usage{
-fetch_information(configuration)
+fetch_information(nc_file)
 }
 \arguments{
-\item{configuration}{of the request.}
+\item{nc_file}{name of the .nc file.}
 }
 \value{
 A list with the important information stored in the .nc file.

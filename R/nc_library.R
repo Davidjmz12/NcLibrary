@@ -31,6 +31,7 @@ utils::globalVariables(c("DATE", "aux", "x"))
 #' @param var_name name of the variable
 #'
 #' @return a matrix with the values of nc_item
+#' @importFrom ncdf4 ncvar_get
 #' @noRd
 .ncvar_get_ <- function(nc_item,var_name)
 {
@@ -201,6 +202,7 @@ utils::globalVariables(c("DATE", "aux", "x"))
 #' @param lst configuration
 #'
 #' @return True if it is a correct configuration
+#' @importFrom ncdf4 nc_open
 #' @noRd
 .check_configuration <- function(lst)
 {
@@ -313,6 +315,7 @@ utils::globalVariables(c("DATE", "aux", "x"))
 #'   }
 #'
 #' @return A data frame with the requested information.
+#' @importFrom ncdf4 nc_open
 #' @export
 read_nc_file <- function(configuration)
 {
@@ -341,6 +344,7 @@ read_nc_file <- function(configuration)
 #' @param nc_file name of the .nc file.
 #'
 #' @return A list with the important information stored in the .nc file.
+#' @importFrom ncdf4 nc_open
 #' @export
 fetch_information <- function(nc_file)
 {
