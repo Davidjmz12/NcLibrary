@@ -116,9 +116,9 @@ utils::globalVariables(c("DATE", "aux", "x"))
 
 	values <- if(configuration_dim$coord_360) transform_coordinate(dim$vals) else{dim$vals}
 	if(configuration_dim$format == 0){
-		return(paste0(values,"N"))
+		return(paste0(values,"E"))
 	} else if(configuration_dim$format == 1){
-		return(lat_to_str(values))
+		return(lon_to_str(values))
 	}
 }
 
